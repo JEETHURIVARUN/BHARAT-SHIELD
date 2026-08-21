@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pyomo
+pandas
+beautifulsoup4
+requests
+searoute
+langchain-openai
+pydantic

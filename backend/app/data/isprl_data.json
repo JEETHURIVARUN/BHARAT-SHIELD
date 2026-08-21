@@ -1,0 +1,23 @@
+{
+  "last_updated": "2024-01-18",
+  "phase_1": {
+    "total_capacity_mmt": 5.33,
+    "caverns": {
+      "Visakhapatnam": {"capacity_mmt": 1.33, "fill_pct": 64.0, "current_mmt": 0.852, "daily_max_drawdown_mmt": 0.030},
+      "Mangaluru":     {"capacity_mmt": 1.50, "fill_pct": 64.0, "current_mmt": 0.960, "daily_max_drawdown_mmt": 0.035},
+      "Padur":         {"capacity_mmt": 2.50, "fill_pct": 64.0, "current_mmt": 1.600, "daily_max_drawdown_mmt": 0.055}
+    }
+  },
+  "phase_2": {
+    "total_capacity_mmt": 11.83,
+    "additional_caverns": {
+      "Chandikhol":    {"capacity_mmt": 4.00, "fill_pct": 0.0,  "current_mmt": 0.0,   "daily_max_drawdown_mmt": 0.0},
+      "Padur_II":      {"capacity_mmt": 2.50, "fill_pct": 0.0,  "current_mmt": 0.0,   "daily_max_drawdown_mmt": 0.0}
+    }
+  },
+  "omc_commercial_stocks": {
+    "IOCL": {"current_mmt": 3.10, "days_of_cover": 27, "daily_consumption_mmt": 0.115},
+    "BPCL": {"current_mmt": 2.05, "days_of_cover": 24, "daily_consumption_mmt": 0.085},
+    "HPCL": {"current_mmt": 1.90, "days_of_cover": 23, "daily_consumption_mmt": 0.082}
+  }
+}

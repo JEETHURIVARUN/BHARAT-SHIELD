@@ -1,0 +1,24 @@
+{
+  "crude_grades": [
+    {"name": "Arab Extra Light",  "API": 38.5, "Sulfur": 1.06, "TAN": 0.05, "Naphtha_Yield": 0.18, "Gasoil_Yield": 0.30, "FuelOil_Yield": 0.20, "Brent_Diff": -0.5,  "Source": "Saudi Arabia", "Route_Risk": 0.85, "Availability": "Term"},
+    {"name": "Arab Light",        "API": 33.4, "Sulfur": 1.77, "TAN": 0.05, "Naphtha_Yield": 0.14, "Gasoil_Yield": 0.31, "FuelOil_Yield": 0.26, "Brent_Diff": -1.2,  "Source": "Saudi Arabia", "Route_Risk": 0.85, "Availability": "Term"},
+    {"name": "Arab Medium",       "API": 29.0, "Sulfur": 2.60, "TAN": 0.08, "Naphtha_Yield": 0.10, "Gasoil_Yield": 0.28, "FuelOil_Yield": 0.35, "Brent_Diff": -2.1,  "Source": "Saudi Arabia", "Route_Risk": 0.85, "Availability": "Term"},
+    {"name": "Arab Heavy",        "API": 27.0, "Sulfur": 2.80, "TAN": 0.10, "Naphtha_Yield": 0.08, "Gasoil_Yield": 0.25, "FuelOil_Yield": 0.42, "Brent_Diff": -3.5,  "Source": "Saudi Arabia", "Route_Risk": 0.85, "Availability": "Term"},
+    {"name": "Murban",            "API": 40.5, "Sulfur": 0.77, "TAN": 0.03, "Naphtha_Yield": 0.20, "Gasoil_Yield": 0.33, "FuelOil_Yield": 0.16, "Brent_Diff":  1.2,  "Source": "UAE",          "Route_Risk": 0.80, "Availability": "Term"},
+    {"name": "Das Blend",         "API": 39.4, "Sulfur": 1.54, "TAN": 0.04, "Naphtha_Yield": 0.18, "Gasoil_Yield": 0.32, "FuelOil_Yield": 0.18, "Brent_Diff": -0.8,  "Source": "UAE",          "Route_Risk": 0.80, "Availability": "Spot"},
+    {"name": "Kuwait Export",     "API": 31.4, "Sulfur": 2.52, "TAN": 0.07, "Naphtha_Yield": 0.12, "Gasoil_Yield": 0.29, "FuelOil_Yield": 0.32, "Brent_Diff": -2.0,  "Source": "Kuwait",       "Route_Risk": 0.82, "Availability": "Term"},
+    {"name": "Basrah Medium",     "API": 29.0, "Sulfur": 3.00, "TAN": 0.30, "Naphtha_Yield": 0.09, "Gasoil_Yield": 0.26, "FuelOil_Yield": 0.38, "Brent_Diff": -3.0,  "Source": "Iraq",         "Route_Risk": 0.88, "Availability": "Spot"},
+    {"name": "Basrah Heavy",      "API": 24.7, "Sulfur": 3.95, "TAN": 0.50, "Naphtha_Yield": 0.05, "Gasoil_Yield": 0.21, "FuelOil_Yield": 0.50, "Brent_Diff": -4.5,  "Source": "Iraq",         "Route_Risk": 0.88, "Availability": "Spot"},
+    {"name": "Iran Heavy",        "API": 30.9, "Sulfur": 1.73, "TAN": 0.09, "Naphtha_Yield": 0.11, "Gasoil_Yield": 0.28, "FuelOil_Yield": 0.33, "Brent_Diff": -5.0,  "Source": "Iran",         "Route_Risk": 0.95, "Availability": "Spot"},
+    {"name": "Oman Export",       "API": 33.0, "Sulfur": 1.00, "TAN": 0.08, "Naphtha_Yield": 0.14, "Gasoil_Yield": 0.30, "FuelOil_Yield": 0.28, "Brent_Diff": -0.9,  "Source": "Oman",         "Route_Risk": 0.70, "Availability": "Spot"},
+    {"name": "Brent",             "API": 38.3, "Sulfur": 0.37, "TAN": 0.06, "Naphtha_Yield": 0.17, "Gasoil_Yield": 0.33, "FuelOil_Yield": 0.19, "Brent_Diff":  0.0,  "Source": "North Sea",    "Route_Risk": 0.15, "Availability": "Spot"},
+    {"name": "WTI",               "API": 39.6, "Sulfur": 0.24, "TAN": 0.05, "Naphtha_Yield": 0.20, "Gasoil_Yield": 0.34, "FuelOil_Yield": 0.15, "Brent_Diff":  1.5,  "Source": "USA",          "Route_Risk": 0.10, "Availability": "Spot"},
+    {"name": "Mars Blend",        "API": 28.5, "Sulfur": 2.12, "TAN": 0.15, "Naphtha_Yield": 0.09, "Gasoil_Yield": 0.26, "FuelOil_Yield": 0.37, "Brent_Diff": -1.8,  "Source": "USA GoM",      "Route_Risk": 0.12, "Availability": "Spot"},
+    {"name": "Guyana Liza",       "API": 32.1, "Sulfur": 0.50, "TAN": 0.20, "Naphtha_Yield": 0.14, "Gasoil_Yield": 0.31, "FuelOil_Yield": 0.24, "Brent_Diff": -0.5,  "Source": "Guyana",       "Route_Risk": 0.20, "Availability": "Spot"},
+    {"name": "Merey (Venezuela)", "API": 16.0, "Sulfur": 2.40, "TAN": 0.30, "Naphtha_Yield": 0.03, "Gasoil_Yield": 0.18, "FuelOil_Yield": 0.58, "Brent_Diff": -8.0,  "Source": "Venezuela",    "Route_Risk": 0.40, "Availability": "Spot"},
+    {"name": "Russian Urals",     "API": 31.7, "Sulfur": 1.55, "TAN": 0.07, "Naphtha_Yield": 0.13, "Gasoil_Yield": 0.30, "FuelOil_Yield": 0.29, "Brent_Diff": -4.0,  "Source": "Russia",       "Route_Risk": 0.60, "Availability": "Spot"},
+    {"name": "ESPO Blend",        "API": 34.8, "Sulfur": 0.62, "TAN": 0.05, "Naphtha_Yield": 0.16, "Gasoil_Yield": 0.31, "FuelOil_Yield": 0.22, "Brent_Diff": -2.5,  "Source": "Russia",       "Route_Risk": 0.55, "Availability": "Spot"},
+    {"name": "Bonny Light",       "API": 35.4, "Sulfur": 0.16, "TAN": 0.04, "Naphtha_Yield": 0.17, "Gasoil_Yield": 0.32, "FuelOil_Yield": 0.20, "Brent_Diff":  2.0,  "Source": "Nigeria",      "Route_Risk": 0.25, "Availability": "Spot"},
+    {"name": "Cossack (AU)",      "API": 47.6, "Sulfur": 0.03, "TAN": 0.01, "Naphtha_Yield": 0.24, "Gasoil_Yield": 0.35, "FuelOil_Yield": 0.10, "Brent_Diff":  3.5,  "Source": "Australia",    "Route_Risk": 0.10, "Availability": "Spot"}
+  ]
+}
