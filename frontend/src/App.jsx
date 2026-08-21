@@ -187,13 +187,25 @@ export default function App() {
               </div>
             ))}
           </div>
-          {scri && (
-            <div className={`ml-auto flex-shrink-0 flex items-center gap-2 text-[10px] font-bold px-3 py-1 rounded-full border ${SCRI_BG[scri.band] || 'bg-white/5 border-white/20'}`}>
-              <span className="text-gray-500 text-[9px] font-normal">SCRI</span>
-              <span className={SCRI_COLOR[scri.band] || 'text-white'}>{scri.score}/100</span>
-              <span className={`text-[9px] ${SCRI_COLOR[scri.band] || 'text-white'}`}>{scri.band}</span>
+          <div className="ml-auto flex items-center gap-3 flex-shrink-0">
+            {/* National Reserve Health Indicator */}
+            <div className="flex items-center gap-2 text-[10px] font-bold px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10">
+              <span className="text-gray-500 text-[9px] font-normal uppercase">Strategic Reserve Cover</span>
+              <span className={`font-mono ${simResult?.crude?.agent4_drawdown_plan?.Total_Covered > 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                {simResult?.crude?.agent4_drawdown_plan?.Total_Covered 
+                  ? (9.5 - (simResult.crude.agent4_drawdown_plan.Total_Covered / 0.7)).toFixed(1)
+                  : "9.5"} Days
+              </span>
             </div>
-          )}
+            
+            {scri && (
+              <div className={`flex items-center gap-2 text-[10px] font-bold px-3 py-1 rounded-full border ${SCRI_BG[scri.band] || 'bg-white/5 border-white/20'}`}>
+                <span className="text-gray-500 text-[9px] font-normal">SCRI</span>
+                <span className={SCRI_COLOR[scri.band] || 'text-white'}>{scri.score}/100</span>
+                <span className={`text-[9px] ${SCRI_COLOR[scri.band] || 'text-white'}`}>{scri.band}</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* KPI Bar */}

@@ -484,6 +484,30 @@ export default function Controls({
                         </div>
                       ))}
                     </div>
+                    {simResult.price_shock.macroeconomic_impact && (
+                      <div className="mt-3 pt-3 border-t border-orange-500/20">
+                        <div className="flex justify-between items-center mb-1.5">
+                          <p className="text-[10px] text-orange-400/80 font-bold uppercase tracking-wider">Macroeconomic Impact (India)</p>
+                          <Tooltip text={`Source: ${simResult.price_shock.macroeconomic_impact.provenance}`}>
+                            <span className="text-[8px] text-gray-500 border border-white/5 rounded px-1.5 cursor-help">ⓘ</span>
+                          </Tooltip>
+                        </div>
+                        <div className="flex gap-4">
+                          <div className="flex-1">
+                            <p className="text-[9px] text-gray-500">GDP Growth</p>
+                            <p className="text-[11px] font-mono font-bold text-red-400">
+                              {simResult.price_shock.macroeconomic_impact.gdp_growth_impact_pct}%
+                            </p>
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-[9px] text-gray-500">Inflation</p>
+                            <p className="text-[11px] font-mono font-bold text-orange-400">
+                              +{simResult.price_shock.macroeconomic_impact.inflation_impact_pct}%
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -566,9 +590,14 @@ export default function Controls({
                           <div key={i} className="flex items-center gap-2 bg-black/25 rounded-xl p-2.5 mb-2">
                             <RankBadge idx={i}/>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 flex-wrap">
+                              <div className="flex items-center gap-2 flex-wrap mb-1">
                                 <p className="text-[12px] font-semibold text-white">{c.Crude_Name}</p>
                                 <AIIBadge band={c.AII_Risk_Band} penalty={c.AII_Penalty} note={c.AII_Note}/>
+                                {c.Route_Risk !== undefined && (
+                                  <span className={`text-[9px] px-1.5 py-0.5 rounded border ${c.Route_Risk > 0.5 ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'bg-green-500/10 border-green-500/30 text-green-400'}`}>
+                                    Route Risk: {(c.Route_Risk * 100).toFixed(0)}%
+                                  </span>
+                                )}
                               </div>
                               <MiniBar value={10-Math.min(c.Viability_Score,10)} max={10}
                                 color={i===0?'bg-yellow-400':i===1?'bg-gray-400':'bg-orange-600'}/>

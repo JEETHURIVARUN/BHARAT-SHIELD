@@ -319,7 +319,7 @@ async def chat_simulate(req: ChatRequest):
         matched = match_crude_assays(refinery, 32.0, 1.5, 0.15, assay_df)
 
         # Upgrade 3: include AII penalty data in top crudes output
-        aii_cols = ["Crude_Name", "Viability_Score", "AII_Penalty", "AII_Risk_Band", "AII_Note", "API_Delta"]
+        aii_cols = ["Crude_Name", "Viability_Score", "AII_Penalty", "AII_Risk_Band", "AII_Note", "API_Delta", "Route_Risk"]
         available_cols = [c for c in aii_cols if c in matched.columns]
         top_crudes = matched[available_cols].head(3).to_dict("records")
 

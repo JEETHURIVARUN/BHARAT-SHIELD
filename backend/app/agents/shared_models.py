@@ -61,12 +61,22 @@ def estimate_price_shock(corridor_risk: float, base_brent: float = 80.5) -> Dict
     dubai_shock = round(corridor_risk * 30.0, 2)
     jkm_shock   = round(corridor_risk * 4.5, 2)    # $/MMBtu (LNG)
 
+    # Macroeconomic Impact (India context):
+    # Rule of thumb: $10/bbl increase reduces GDP growth by ~0.2% and increases inflation by ~0.3%
+    gdp_impact_pct = round((brent_shock / 10.0) * -0.2, 2)
+    inflation_impact_pct = round((brent_shock / 10.0) * 0.3, 2)
+
     return {
         "base_brent_usd_bbl":     base_brent,
         "stressed_brent_usd_bbl": round(base_brent + brent_shock, 2),
         "brent_shock_usd_bbl":    brent_shock,
         "stressed_dubai_usd_bbl": round(base_brent - 1.3 + dubai_shock, 2),
         "jkm_shock_usd_mmbtu":    jkm_shock,
+        "macroeconomic_impact": {
+            "gdp_growth_impact_pct": gdp_impact_pct,
+            "inflation_impact_pct": inflation_impact_pct,
+            "provenance": "RBI/IMF Sensitivity Estimates (Agent 2)"
+        },
         "confidence_interval":    "± $2.50/bbl (85% Confidence)",
         "provenance":             "VECM Statistical Math Model (Agent 2)"
     }
