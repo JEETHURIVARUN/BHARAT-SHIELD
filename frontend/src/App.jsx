@@ -147,9 +147,14 @@ export default function App() {
   const fetchPortwatch = async (portId, metric = 'transit_calls') => {
     setIsPortLoading(true);
     try {
+      const today = new Date();
+      const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+      const end_date = today.toISOString().split('T')[0];
+      const start_date = thirtyDaysAgo.toISOString().split('T')[0];
+
       const r = await fetch('http://localhost:8000/api/v1/portwatch', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ port_id: portId || 'AEJEA', start_date:'2023-01-01', end_date:'2023-01-31', metric })
+        body: JSON.stringify({ port_id: portId || 'Paradip', start_date, end_date, metric })
       });
       setPortwatchData((await r.json()).data);
     } catch(e) { console.error(e); }

@@ -919,14 +919,20 @@ export default function Controls({
 
             {!portwatchData && !isPortwatchLoading && (
               <div>
-                <p className="text-[9px] text-gray-600 uppercase tracking-widest mb-2">Key Ports — Quick Access</p>
+                <p className="text-[9px] text-gray-600 uppercase tracking-widest mb-2">Key Ports & Corridors — Quick Access</p>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    ['Mundra','INMUN','Gujarat'],['Paradip','INPRD','Odisha'],['Jebel Ali','AEJEA','UAE'],
-                    ['Dahej','INGEH','Gujarat'],['Kochi','INCOK','Kerala'],['Hazira','INHAZ','Gujarat'],
-                    ['Ennore','INENR','Tamil Nadu'],['Vadinar','INVAD','Gujarat'],['Ras Laffan','QARLF','Qatar'],
+                    ['Paradip','INPRD','Odisha · SPM Hub'],
+                    ['Mundra','INMUN','Gujarat · Crude/LPG'],
+                    ['Vadinar','INVAD','Gujarat · IOCL/SMPL'],
+                    ['Mangaluru','INMRPL','Karnataka · ISPRL'],
+                    ['Dahej','INGEH','Gujarat · LNG Terminal'],
+                    ['Kochi','INCOK','Kerala · BPCL/LNG'],
+                    ['Strait of Hormuz','HORMUZ','Persian Gulf'],
+                    ['Red Sea','REDSEA','Bab-el-Mandeb'],
+                    ['Ras Laffan','QARLF','Qatar · LNG Source'],
                   ].map(([l,c,region]) => (
-                    <button key={c} onClick={() => { setPortQ(c); onPortwatchSearch(c, portMetric); }}
+                    <button key={c} onClick={() => { setPortQ(l); onPortwatchSearch(l, portMetric); }}
                       className="bg-white/5 hover:bg-accent/10 hover:border-accent/40 border border-white/10 text-center p-2.5 rounded-xl transition-all">
                       <p className="text-[11px] font-bold text-white">{l}</p>
                       <p className="text-[8px] text-gray-500 font-mono">{c}</p>
@@ -940,33 +946,62 @@ export default function Controls({
             {isPortwatchLoading ? (
               <div className="flex flex-col items-center py-12 gap-3">
                 <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin"/>
-                <p className="text-xs text-gray-500 animate-pulse">Fetching IMF PortWatch data…</p>
+                <p className="text-xs text-gray-500 animate-pulse">Fetching MARG PortWatch Analytics…</p>
               </div>
             ) : portwatchData && (
               <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}}
                 className="bg-white/[0.04] rounded-2xl p-4 border border-white/8">
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between items-start mb-4">
                   <div>
-                    <p className="text-[9px] text-gray-500 uppercase tracking-widest">Port Code</p>
-                    <p className="text-xl font-bold font-mono text-accent">{portwatchData.port_id}</p>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest">Port / Corridor</p>
+                    <p className="text-lg font-bold font-mono text-accent">{portwatchData.port_id}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-[9px] text-gray-500 uppercase tracking-widest">Metric</p>
-                    <p className="text-[12px] font-semibold text-white">{portwatchData.metric?.replace(/_/g,' ')}</p>
+                    <p className="text-[12px] font-semibold text-white">{portwatchData.metric_label || portwatchData.metric?.replace(/_/g,' ')}</p>
+                    {portwatchData.unit && <p className="text-[9px] text-gray-500 font-mono">{portwatchData.unit}</p>}
                   </div>
                 </div>
-                {portwatchData.data?.map((d, i) => (
-                  <div key={i} className="flex items-center gap-3 mb-2">
-                    <span className="text-[10px] text-gray-500 font-mono w-24">{d.date}</span>
-                    <div className="flex-1 h-1.5 bg-white/8 rounded-full overflow-hidden">
-                      <div className="h-full bg-accent rounded-full" style={{width:`${Math.min(100,(d.value/20)*100)}%`}}/>
+
+                {portwatchData.summary && (
+                  <div className="grid grid-cols-3 gap-2 bg-black/40 p-2.5 rounded-xl border border-white/5 mb-3 text-center">
+                    <div>
+                      <p className="text-[8px] text-gray-500 uppercase">Peak</p>
+                      <p className="text-xs font-mono font-bold text-emerald-400">{portwatchData.summary.peak}</p>
                     </div>
-                    <span className="text-[11px] font-mono font-bold text-green-400 w-8 text-right">{d.value}</span>
+                    <div>
+                      <p className="text-[8px] text-gray-500 uppercase">Crisis Trough</p>
+                      <p className="text-xs font-mono font-bold text-red-400">{portwatchData.summary.trough}</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] text-gray-500 uppercase">Traffic Shock</p>
+                      <p className="text-xs font-mono font-bold text-orange-400">-{portwatchData.summary.crisis_drop_pct}%</p>
+                    </div>
                   </div>
-                ))}
-                {portwatchData.note && (
-                  <p className="text-[10px] text-gray-600 mt-3 flex items-center gap-1 pt-3 border-t border-white/5">
-                    <Info size={9}/>{portwatchData.note}
+                )}
+
+                {(() => {
+                  const maxVal = Math.max(...(portwatchData.data?.map(d => d.value) || [1]), 1);
+                  return (
+                    <div className="max-h-56 overflow-y-auto pr-1 space-y-1.5 scrollbar-thin">
+                      {portwatchData.data?.map((d, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <span className="text-[10px] text-gray-400 font-mono w-24 flex-shrink-0">{d.date}</span>
+                          <div className="flex-1 h-1.5 bg-white/8 rounded-full overflow-hidden">
+                            <div className="h-full bg-accent rounded-full transition-all duration-500" 
+                              style={{width:`${Math.min(100, Math.max(5, (d.value / maxVal) * 100))}%`}}/>
+                          </div>
+                          <span className="text-[11px] font-mono font-bold text-emerald-400 w-10 text-right">{d.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+
+                {portwatchData.summary?.note && (
+                  <p className="text-[10px] text-gray-400 mt-3 flex items-start gap-1.5 pt-3 border-t border-white/5 leading-relaxed">
+                    <Info size={11} className="text-accent flex-shrink-0 mt-0.5"/>
+                    <span>{portwatchData.summary.note}</span>
                   </p>
                 )}
               </motion.div>
