@@ -7,3 +7,6 @@ requests
 searoute
 langchain-openai
 pydantic
+python-dotenv
+websockets
+google-generativeai
