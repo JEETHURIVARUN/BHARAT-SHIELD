@@ -1,5 +1,5 @@
 """
-Agent 5 — Session State Store (SQLite)
+KAUTILYA — Session State Store (SQLite)
 Saves every simulation snapshot as a JSON blob to a local SQLite DB.
 Enables State Hydration (browser refresh recovery) and War Games Archive (time-travel replay).
 Zero new dependencies — uses Python built-in sqlite3.

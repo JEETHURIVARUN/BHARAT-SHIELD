@@ -75,10 +75,10 @@ def estimate_price_shock(corridor_risk: float, base_brent: float = 80.5) -> Dict
         "macroeconomic_impact": {
             "gdp_growth_impact_pct": gdp_impact_pct,
             "inflation_impact_pct": inflation_impact_pct,
-            "provenance": "RBI/IMF Sensitivity Estimates (Agent 2)"
+            "provenance": "RBI/IMF Sensitivity Estimates (MARG)"
         },
         "confidence_interval":    "± $2.50/bbl (85% Confidence)",
-        "provenance":             "VECM Statistical Math Model (Agent 2)"
+        "provenance":             "VECM Statistical Math Model (MARG)"
     }
 
 # ─── Cape of Good Hope Delay Calculator ───────────────────────────────────────
@@ -87,9 +87,9 @@ def calculate_rerouting_delay(vessel_type: str = "VLCC") -> Dict[str, Any]:
     Computes ETA delay for Cape of Good Hope rerouting by vessel type.
     """
     delays = {
-        "VLCC":     {"extra_days": 14, "extra_nm": 4500, "extra_cost_usd": 1_800_000, "confidence": "± 1.5 days", "provenance": "Historical AIS Trajectories (Agent 2)"},
-        "Suezmax":  {"extra_days": 16, "extra_nm": 4500, "extra_cost_usd": 1_200_000, "confidence": "± 2.0 days", "provenance": "Historical AIS Trajectories (Agent 2)"},
-        "Aframax":  {"extra_days": 18, "extra_nm": 4500, "extra_cost_usd": 900_000,   "confidence": "± 2.0 days", "provenance": "Historical AIS Trajectories (Agent 2)"},
-        "LNG_QFLEX":{"extra_days": 15, "extra_nm": 4500, "extra_cost_usd": 1_600_000, "confidence": "± 1.5 days", "provenance": "Historical AIS Trajectories (Agent 2)"},
+        "VLCC":     {"extra_days": 14, "extra_nm": 4500, "extra_cost_usd": 1_800_000, "confidence": "± 1.5 days", "provenance": "Historical AIS Trajectories (MARG)"},
+        "Suezmax":  {"extra_days": 16, "extra_nm": 4500, "extra_cost_usd": 1_200_000, "confidence": "± 2.0 days", "provenance": "Historical AIS Trajectories (MARG)"},
+        "Aframax":  {"extra_days": 18, "extra_nm": 4500, "extra_cost_usd": 900_000,   "confidence": "± 2.0 days", "provenance": "Historical AIS Trajectories (MARG)"},
+        "LNG_QFLEX":{"extra_days": 15, "extra_nm": 4500, "extra_cost_usd": 1_600_000, "confidence": "± 1.5 days", "provenance": "Historical AIS Trajectories (MARG)"},
     }
     return delays.get(vessel_type, delays["VLCC"])

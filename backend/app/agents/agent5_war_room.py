@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def generate_audit_package(deficit_mmt: float, phase: int, drawdown_plan: dict) -> dict:
     """
-    Agent 5 (The War Room): Generates a cryptographically signed JSON payload 
+    KAUTILYA (Strategic Audit & War Room): Generates a cryptographically signed JSON payload 
     and a CSV execution ledger.
     """
     timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()

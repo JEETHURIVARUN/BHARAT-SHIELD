@@ -1,6 +1,6 @@
 """
-Agent 2 — Dead Reckoning Vessel Extrapolation
-Computes estimated vessel position when AIS feed is stale (dark zone / GPS spoofing).
+MARG — Dead Reckoning Vessel Extrapolation
+Cinematic physics-based Dead Reckoning when AIS telemetry drops or is jammed. (dark zone / GPS spoofing).
 Uses Mercator sailing formula.
 """
 import math

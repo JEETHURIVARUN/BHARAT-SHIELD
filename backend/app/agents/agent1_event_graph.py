@@ -1,6 +1,6 @@
 """
-Agent 1 — Event-Graph Memory & Temporal Decay
-Links related maritime security incidents into Escalation Chains instead of flat lists.
+NETRA — Event-Graph Memory & Temporal Decay
+Incident chaining and exponential decay for maritime intelligence.
 Uses location-cluster matching + time-window grouping + Risk(t) decay scoring.
 """
 import datetime

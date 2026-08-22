@@ -220,10 +220,10 @@ def find_historical_analog(region: str, commodity: str = "crude") -> Optional[Di
     return best_match
 
 # ─── Comprehensive Vulnerability Assessment ────────────────────────────────────
-def evaluate_plan_vulnerabilities(sim_data: Dict[str, Any]) -> Dict[str, Any]:
+def evaluate_plan_vulnerabilities(sim_result: dict) -> dict:
     """
-    Red Team / Devil's Advocate Agent (Agent 6).
-    Performs multi-layer vulnerability analysis: infrastructure, metallurgy,
+    Red Team / Devil's Advocate Critic (CHAKRA).
+    Scans the entire proposed multi-engine resolution package for:ability analysis: infrastructure, metallurgy,
     strategic reserve depletion, and LNG shortfall risks.
     """
     warnings = []

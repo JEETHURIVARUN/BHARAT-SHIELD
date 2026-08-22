@@ -68,7 +68,7 @@ def evaluate_infrastructure_constraints(rerouted_volume_mmt: float, port: str) -
         "pipeline_capacity": pipe_cap,
         "is_bottlenecked": bottleneck_detected,
         "reasons": bottleneck_reasons,
-        "provenance": "DGH & PNGRB Capacity Registers (Agent 2)"
+        "provenance": "DGH & PNGRB Capacity Registers (MARG)"
     }
 
 def calculate_disruption_delays(vessel_eta_days: int, reroute_cape_of_good_hope: bool) -> int:

@@ -279,17 +279,17 @@ async def chat_simulate(req: ChatRequest):
 
     result = {"status": "success", "commodity": commodity, "region": region, "deliberation_log": []}
 
-    # ── Agent 1 [NETRA] - Sentinel: Threat Characterization ─────────────────
+    # ── [NETRA] Threat Characterization ───────────────────────────────────────
     result["deliberation_log"].append(
-        f"[NETRA · Sentinel] Crisis detected: '{region}'. "
+        f"[NETRA] Crisis detected: '{region}'. "
         f"Corridor risk computed at {round(corridor_risk*100, 0):.0f}%. "
         f"Affected commodity: {commodity.upper()}."
     )
 
-    # ── Agent 2 [MARG] - Quant: Price Shock Estimation ───────────────────────
+    # ── [MARG] Price Shock Estimation ─────────────────────────────────────────
     result["price_shock"] = estimate_price_shock(corridor_risk)
     result["deliberation_log"].append(
-        f"[MARG · Quant] VECM price model applied. "
+        f"[MARG] VECM price model applied. "
         f"Brent shock: +${result['price_shock']['brent_shock_usd_bbl']}/bbl "
         f"(CI: {result['price_shock']['confidence_interval']}). "
         f"JKM LNG shock: +${result['price_shock']['jkm_shock_usd_mmbtu']}/MMBtu."
@@ -300,13 +300,13 @@ async def chat_simulate(req: ChatRequest):
         constraints = evaluate_infrastructure_constraints(c_deficit, port)
         if constraints.get("is_bottlenecked"):
             result["deliberation_log"].append(
-                f"[MARG · Quant] Infrastructure assessment: {port} bottlenecked! "
+                f"[MARG] Infrastructure assessment: {port} bottlenecked! "
                 f"SPM cap: {constraints['spm_capacity']} MMT/d, Pipeline cap: {constraints['pipeline_capacity']} MMT/d. "
                 f"Requesting {c_deficit} MMT/d exceeds physical limits."
             )
         else:
             result["deliberation_log"].append(
-                f"[MARG · Quant] {port} infrastructure: CLEAR. Capacity sufficient."
+                f"[MARG] {port} infrastructure: CLEAR. Capacity sufficient."
             )
 
         assay_df = _load_assays()
@@ -324,7 +324,7 @@ async def chat_simulate(req: ChatRequest):
         top_crudes = matched[available_cols].head(3).to_dict("records")
 
         result["deliberation_log"].append(
-            f"[RASAYAN · Trader] Scanned 22-grade global assay DB. "
+            f"[RASAYAN] Scanned 22-grade global assay DB. "
             f"Best replacement for {refinery}: {top_crudes[0]['Crude_Name']} "
             f"(Viability Score: {round(top_crudes[0]['Viability_Score'], 2)} | "
             f"AII Risk: {top_crudes[0].get('AII_Risk_Band', 'N/A')})."
@@ -335,13 +335,13 @@ async def chat_simulate(req: ChatRequest):
         unmet = drawdown.get("Unmet_Deficit_MMT", 0)
         if unmet > 0.01:
             result["deliberation_log"].append(
-                f"[KOSH · Governor] ⚠ CAPACITY GAP: Physical reserve capacity exhausted. "
+                f"[KOSH] ⚠ CAPACITY GAP: Physical reserve capacity exhausted. "
                 f"Max drawdown: {round(drawdown_total, 2)} MMT. Unmet deficit: {round(unmet, 2)} MMT — "
                 f"requires emergency spot procurement."
             )
         else:
             result["deliberation_log"].append(
-                f"[KOSH · Governor] Phase I MILP solver completed. "
+                f"[KOSH] Phase I MILP solver completed. "
                 f"Total drawdown plan: {round(drawdown_total, 2)} MMT. "
                 f"OMC contribution: {round(c_deficit*0.6, 2)} MMT | ISPRL: {round(c_deficit*0.4, 2)} MMT."
             )
@@ -375,7 +375,7 @@ async def chat_simulate(req: ChatRequest):
         if supplier_match.get("top_suppliers"):
             s0 = supplier_match["top_suppliers"][0]
             result["deliberation_log"].append(
-                f"[RASAYAN · Trader] LNG market scan complete. "
+                f"[RASAYAN] LNG market scan complete. "
                 f"Top supplier: {s0['name']} ({s0['country']}) — "
                 f"Methane {s0['methane_pct']}%, Risk: {s0.get('risk', 'Low')}."
             )
@@ -383,7 +383,7 @@ async def chat_simulate(req: ChatRequest):
         regasif_plan = calculate_regasification_plan(g_deficit)
         gas_drawdown = solve_gas_drawdown(g_deficit, disrupted_terminals=[])
         result["deliberation_log"].append(
-            f"[KOSH · Governor] Gas distribution plan: "
+            f"[KOSH] Gas distribution plan: "
             f"{g_deficit} MMSCMD across {len(regasif_plan.get('terminal_plan', []))} LNG terminals. "
             f"Shortfall: {regasif_plan.get('shortfall_mmscmd', 0)} MMSCMD (requires domestic field ramp-up)."
         )
@@ -410,9 +410,9 @@ async def chat_simulate(req: ChatRequest):
             "recovery_timeline":          timeline_gas,
         }
 
-    # ── Agent 6 [CHAKRA] - Red Team Assessment ───────────────────────────────
+    # ── [CHAKRA] Red Team Assessment ──────────────────────────────────────────
     result["deliberation_log"].append(
-        "[CHAKRA · Critic] Red-teaming the proposed plan for hidden vulnerabilities..."
+        "[CHAKRA] Red-teaming the proposed plan for hidden vulnerabilities..."
     )
     critic_report = evaluate_plan_vulnerabilities(result)
     result["agent6_critic"] = critic_report
@@ -420,16 +420,16 @@ async def chat_simulate(req: ChatRequest):
     if n_warn:
         sev_list = [w["severity"] for w in critic_report["warnings"]]
         result["deliberation_log"].append(
-            f"[CHAKRA · Critic] ALERT: {n_warn} vulnerabilities found "
+            f"[CHAKRA] ALERT: {n_warn} vulnerabilities found "
             f"({sev_list.count('CRITICAL')} CRITICAL, {sev_list.count('HIGH')} HIGH, "
             f"{sev_list.count('MEDIUM')} MEDIUM). Review before authorizing."
         )
     else:
         result["deliberation_log"].append(
-            "[CHAKRA · Critic] Plan verified. No critical vulnerabilities detected. Safe to authorize."
+            "[CHAKRA] Plan verified. No critical vulnerabilities detected. Safe to authorize."
         )
 
-    # ── Agent 5 [KAUTILYA] - Composite Supply Chain Risk Index ────────────────
+    # ── [KAUTILYA] Composite Supply Chain Risk Index ──────────────────────────
     is_bottlenecked = result.get("crude", {}).get("agent2_infrastructure_check", {}).get("is_bottlenecked", False)
     result["supply_risk_index"] = compute_supply_risk_index(
         corridor_risk=corridor_risk,
@@ -438,7 +438,7 @@ async def chat_simulate(req: ChatRequest):
         deficit_mmt=max(c_deficit, g_deficit * 0.3)  # normalize gas to crude-equivalent
     )
     result["deliberation_log"].append(
-        f"[KAUTILYA · War Room] Composite Supply Chain Risk Index: "
+        f"[KAUTILYA] Composite Supply Chain Risk Index: "
         f"{result['supply_risk_index']['score']}/100 "
         f"({result['supply_risk_index']['band']} RISK). "
         f"Directive package ready for authorization."
