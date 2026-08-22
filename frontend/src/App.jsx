@@ -61,16 +61,24 @@ export default function App() {
     } catch(e) { console.error(e); }
   };
 
-  // Fetch vessels on mount and auto-refresh
+  // Fetch vessels on mount and auto-refresh with stateful MMSI merge
   useEffect(() => {
     const fetchVessels = () => {
       fetch('http://localhost:8000/api/v1/vessels')
         .then(r => r.json())
-        .then(d => setVessels(d.vessels || []))
+        .then(d => {
+          if (d.vessels && d.vessels.length > 0) {
+            setVessels(prev => {
+              const map = new Map(prev.map(v => [v.mmsi, v]));
+              d.vessels.forEach(v => map.set(v.mmsi, { ...map.get(v.mmsi), ...v }));
+              return Array.from(map.values());
+            });
+          }
+        })
         .catch(() => {});
     };
     fetchVessels();
-    const interval = setInterval(fetchVessels, 30000); // 30s
+    const interval = setInterval(fetchVessels, 10000); // 10s poll
     return () => clearInterval(interval);
   }, []);
 

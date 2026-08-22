@@ -178,19 +178,26 @@ export default function Dashboard({ simulationData, vessels, onPortClick }) {
       getPosition:d=>d.c, getFillColor:[168,85,247,220], getRadius:32000, radiusMinPixels:7, pickable:true,
     }),
 
-    // ── Animated Vessels ────────────────────────────────────────────
+    // ── Animated Strategic Fleet Vessels ────────────────────────────
     vesselPositions.length > 0 && new ScatterplotLayer({
       id:'vessels',
       data: vesselPositions,
       getPosition: d => [d.lon, d.lat],
-      getFillColor: d => d.type?.includes('LNG') ? [34,211,238,220] : [250,204,21,200],
-      getRadius: 18000, radiusMinPixels: 4, radiusMaxPixels: 10,
-      pickable:true, autoHighlight:true,
+      getFillColor: d => {
+        if (d.country === 'India') return [249, 115, 22, 230]; // Indian flag orange/saffron
+        if (d.type?.includes('LNG')) return [34, 211, 238, 220]; // Cyan for LNG
+        if (d.position_type === 'dead_reckoned') return [234, 179, 8, 200]; // Amber for Dead-reckoned
+        return [250, 204, 21, 210]; // Gold/Yellow for crude tankers
+      },
+      getRadius: d => (d.country === 'India' ? 22000 : 18000),
+      radiusMinPixels: 5, radiusMaxPixels: 12,
+      pickable: true, autoHighlight: true,
     }),
     vesselPositions.length > 0 && new TextLayer({
       id:'vessel-labels', data: vesselPositions,
-      getPosition: d => [d.lon, d.lat], getText: d => d.name,
-      getSize: 10, getColor:[200,200,200,180], getPixelOffset:[0,-16], fontWeight:500,
+      getPosition: d => [d.lon, d.lat], 
+      getText: d => `${d.flag || '🚢'} ${d.name}`,
+      getSize: 10, getColor:[220,220,220,200], getPixelOffset:[0,-18], fontWeight:600,
     }),
   ].filter(Boolean);
 
@@ -212,7 +219,7 @@ export default function Dashboard({ simulationData, vessels, onPortClick }) {
       <motion.div initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}}
         className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur border border-white/10 rounded-full px-5 py-2 flex items-center gap-4 pointer-events-none">
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        <span className="text-[10px] text-gray-300 uppercase tracking-widest">Systems Nominal</span>
+        <span className="text-[10px] text-gray-300 uppercase tracking-widest">MARG Fleet Telemetry Active</span>
         <span className="w-px h-3 bg-white/15" />
         <span className="text-[10px] text-gray-500 font-mono">{new Date().toUTCString()}</span>
         {simulationData && <>
@@ -238,14 +245,15 @@ export default function Dashboard({ simulationData, vessels, onPortClick }) {
       {/* Legend */}
       <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.7}}
         className="absolute bottom-5 right-4 bg-black/60 backdrop-blur border border-white/10 rounded-xl p-4 pointer-events-none flex flex-col gap-1.5">
-        <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1 font-bold">Legend</p>
+        <p className="text-[9px] text-gray-500 uppercase tracking-widest mb-1 font-bold">Strategic Fleet Telemetry</p>
         {[
+          {color:'bg-orange-500', label:'🇮🇳 Indian Sovereign Fleet'},
+          {color:'bg-yellow-400', label:'🛢️ Crude Tanker / Charter'},
+          {color:'bg-cyan-400',   label:'⚡ LNG / Gas Carrier'},
           {color:'bg-blue-500',   label:'SPM Port / Crude Pipeline'},
-          {color:'bg-red-500',    label:'Refinery / Chokepoint'},
-          {color:'bg-emerald-500',label:'ISPRL Cavern'},
           {color:'bg-purple-500', label:'LNG Terminal / Gas Pipeline'},
-          {color:'bg-yellow-400', label:'Crude Source (Ras Tanura)'},
-          {color:'bg-cyan-400',   label:'LNG Carrier'},
+          {color:'bg-emerald-500',label:'ISPRL Strategic Cavern'},
+          {color:'bg-red-500',    label:'Refinery / Chokepoint'},
         ].map(l => (
           <div key={l.label} className="flex items-center gap-2">
             <span className={`w-2.5 h-2.5 rounded-full ${l.color} flex-shrink-0`}/>
@@ -268,13 +276,45 @@ export default function Dashboard({ simulationData, vessels, onPortClick }) {
       <AnimatePresence>
         {tooltip && (
           <motion.div key="tt" initial={{opacity:0,scale:0.9}} animate={{opacity:1,scale:1}} exit={{opacity:0}}
-            className="absolute pointer-events-none bg-black/85 backdrop-blur border border-white/20 rounded-xl px-3 py-2 text-xs z-50 shadow-xl"
+            className="absolute pointer-events-none bg-black/90 backdrop-blur border border-white/20 rounded-xl px-3.5 py-2.5 text-xs z-50 shadow-2xl max-w-xs"
             style={{left:tooltip.x+14, top:tooltip.y-34}}>
-            <p className="font-bold text-white">{tooltip.object.name}</p>
-            {tooltip.object.type  && <p className="text-gray-400 mt-0.5 text-[10px]">{tooltip.object.type}</p>}
-            {tooltip.object.cap   && <p className="text-purple-300 mt-0.5 text-[10px]">{tooltip.object.cap}</p>}
-            {tooltip.object.risk !== undefined && <p className="text-red-400 mt-0.5 text-[10px]">Risk: {Math.round(tooltip.object.risk*100)}%</p>}
-            {tooltip.object.speed !== undefined && <p className="text-yellow-300 mt-0.5 text-[10px]">{tooltip.object.type} · {tooltip.object.speed} kn</p>}
+            <div className="flex items-center gap-2">
+              {tooltip.object.flag && <span className="text-base">{tooltip.object.flag}</span>}
+              <p className="font-bold text-white text-[13px]">{tooltip.object.name}</p>
+            </div>
+
+            {tooltip.object.country && (
+              <p className="text-gray-400 text-[10px] mt-0.5">
+                {tooltip.object.country} · <span className="text-gray-500">{tooltip.object.category || 'Strategic Fleet'}</span>
+              </p>
+            )}
+
+            {tooltip.object.type && (
+              <div className="flex items-center gap-2 mt-1 text-[10px]">
+                <span className="text-cyan-300 font-mono">{tooltip.object.type}</span>
+                {tooltip.object.speed !== undefined && (
+                  <span className="text-yellow-300 font-mono">· {tooltip.object.speed} kn</span>
+                )}
+                {tooltip.object.heading !== undefined && tooltip.object.heading > 0 && (
+                  <span className="text-gray-400 font-mono">· {tooltip.object.heading}°</span>
+                )}
+              </div>
+            )}
+
+            {tooltip.object.position_type === 'dead_reckoned' && (
+              <div className="mt-1.5 bg-yellow-500/15 border border-yellow-500/30 rounded px-1.5 py-0.5 text-[9px] text-yellow-300">
+                ⚡ MARG Dead-Reckoned (+{tooltip.object.extrapolated_nm || 0} nm forward)
+              </div>
+            )}
+
+            {tooltip.object.dark_zone && (
+              <div className="mt-1 bg-red-500/20 border border-red-500/40 rounded px-1.5 py-0.5 text-[9px] text-red-300">
+                ⚠ {tooltip.object.dark_zone}
+              </div>
+            )}
+
+            {tooltip.object.cap && <p className="text-purple-300 mt-1 text-[10px]">{tooltip.object.cap}</p>}
+            {tooltip.object.risk !== undefined && <p className="text-red-400 mt-1 text-[10px] font-bold">Risk: {Math.round(tooltip.object.risk*100)}%</p>}
           </motion.div>
         )}
       </AnimatePresence>
