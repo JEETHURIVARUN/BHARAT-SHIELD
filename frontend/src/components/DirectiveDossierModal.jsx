@@ -18,6 +18,10 @@ export default function DirectiveDossierModal({ auditResult, onClose }) {
 
   // Clean up speech synthesis on unmount
   useEffect(() => {
+    // Pre-load voices on mount for Chrome
+    if (window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+    }
     return () => {
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
@@ -34,8 +38,18 @@ export default function DirectiveDossierModal({ auditResult, onClose }) {
     } else {
       const textToRead = story.audio_narration_script || story.executive_summary || "National Energy Security Directive Authorized.";
       const utterance = new SpeechSynthesisUtterance(textToRead);
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
+      
+      const voices = window.speechSynthesis.getVoices();
+      // Look for Indian English Female voices (like Microsoft Neerja, Google en-IN)
+      let indVoice = voices.find(v => v.lang.includes('en-IN') && (v.name.includes('Female') || v.name.includes('Neerja') || v.name.includes('Heera')));
+      if (!indVoice) indVoice = voices.find(v => v.lang.includes('en-IN'));
+      
+      if (indVoice) {
+        utterance.voice = indVoice;
+      }
+
+      utterance.rate = 0.95; // Slightly slower for better authoritative pacing
+      utterance.pitch = 1.1;
       utterance.onend = () => setIsPlayingAudio(false);
       utterance.onerror = () => setIsPlayingAudio(false);
       window.speechSynthesis.speak(utterance);
