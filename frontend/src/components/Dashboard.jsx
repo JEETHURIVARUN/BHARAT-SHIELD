@@ -57,13 +57,17 @@ export default function Dashboard({ simulationData, vessels, onPortClick }) {
 
   useEffect(() => { const i = setInterval(() => setTick(t => t + 1), 80); return () => clearInterval(i); }, []);
 
-  // Animate vessel positions (drift them slowly)
+  // Animate vessel positions (drift them slowly with robust coordinate sanitization)
   useEffect(() => {
-    if (!vessels?.length) return;
-    setVesselPositions(vessels.map(v => ({
+    if (!vessels || !Array.isArray(vessels) || vessels.length === 0) {
+      setVesselPositions([]);
+      return;
+    }
+    const valid = vessels.filter(v => v && typeof v.lon === 'number' && typeof v.lat === 'number' && !isNaN(v.lon) && !isNaN(v.lat));
+    setVesselPositions(valid.map(v => ({
       ...v,
-      lon: v.lon + (Math.sin(tick * 0.002 + v.lon) * 0.002),
-      lat: v.lat + (Math.cos(tick * 0.002 + v.lat) * 0.001),
+      lon: Number(v.lon) + (Math.sin(tick * 0.002 + Number(v.lon)) * 0.002),
+      lat: Number(v.lat) + (Math.cos(tick * 0.002 + Number(v.lat)) * 0.001),
     })));
   }, [tick, vessels]);
 

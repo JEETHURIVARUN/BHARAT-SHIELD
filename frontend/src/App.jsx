@@ -51,7 +51,7 @@ export default function App() {
       .catch(() => {});
   }, []);
 
-  const handleRestoreSession = async (snapshotId) => {
+  const handleReplay = async (snapshotId) => {
     try {
       const r = await fetch(`http://localhost:8000/api/v1/snapshots/${snapshotId}`);
       const d = await r.json();
