@@ -220,11 +220,11 @@ def find_historical_analog(region: str, commodity: str = "crude") -> Optional[Di
     return best_match
 
 # ─── Comprehensive Vulnerability Assessment ────────────────────────────────────
-def evaluate_plan_vulnerabilities(sim_result: dict) -> dict:
+def evaluate_plan_vulnerabilities(sim_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Red Team / Devil's Advocate Critic (CHAKRA).
-    Scans the entire proposed multi-engine resolution package for:ability analysis: infrastructure, metallurgy,
-    strategic reserve depletion, and LNG shortfall risks.
+    Scans the entire proposed multi-engine resolution package for infrastructure,
+    metallurgy, strategic reserve depletion, and LNG shortfall risks.
     """
     warnings = []
     commodity = sim_data.get("commodity", "crude")

@@ -202,14 +202,14 @@ def _parse_with_llm(message: str) -> dict:
         f"User message: {message}"
     )
     
-    # Try OpenAI
+    # Try OpenAI with fast 0-retry failover
     openai_key = os.getenv("OPENAI_API_KEY", "")
     if openai_key and not openai_key.startswith("your_"):
         try:
             from langchain_openai import ChatOpenAI
             from langchain_core.output_parsers import JsonOutputParser
             from langchain_core.prompts import ChatPromptTemplate
-            llm = ChatOpenAI(model="gpt-4o-mini", api_key=openai_key, timeout=15)
+            llm = ChatOpenAI(model="gpt-4o-mini", api_key=openai_key, timeout=4, max_retries=0)
             chain = ChatPromptTemplate.from_template("{p}") | llm | JsonOutputParser()
             return chain.invoke({"p": prompt})
         except Exception as e:
@@ -237,8 +237,12 @@ def _parse_with_llm(message: str) -> dict:
             try:
                 import google.generativeai as genai
                 genai.configure(api_key=gemini_key)
-                model = genai.GenerativeModel("gemini-2.0-flash-exp")
-                resp = model.generate_content(prompt)
+                try:
+                    model = genai.GenerativeModel("gemini-1.5-flash")
+                    resp = model.generate_content(prompt)
+                except Exception:
+                    model = genai.GenerativeModel("gemini-pro")
+                    resp = model.generate_content(prompt)
                 text = resp.text.strip()
                 if "```" in text:
                     text = text.split("```")[1]
