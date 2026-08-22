@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import Controls from './components/Controls';
+import DirectiveDossierModal from './components/DirectiveDossierModal';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PRICE_MOCK = { Brent_USD_bbl: 80.50, Dubai_USD_bbl: 79.20, WTI_USD_bbl: 77.80, JKM_USD_MMBtu: 14.25, TTF_USD_MMBtu: 11.80, HenryHub_USD_MMBtu: 2.85 };
@@ -29,27 +30,28 @@ export default function App() {
   const [snapshots, setSnapshots]           = useState([]);
   const [restoreToast, setRestoreToast]     = useState(null); // { snapshot_id, label, age_min }
 
-  // On mount: check if there's a recent session to restore
+  // Check for recent active session on initial mount
   useEffect(() => {
     fetch('http://localhost:8000/api/v1/snapshots')
       .then(r => r.json())
       .then(d => {
-        if (d.snapshots?.length) setSnapshots(d.snapshots);
-        // If latest snapshot is < 30 min old, show restore toast
-        const ageSeconds = d.latest_age_seconds;
-        if (ageSeconds != null && ageSeconds < 1800 && d.snapshots?.length) {
-          const latest = d.snapshots[0];
-          setRestoreToast({
-            snapshot_id: latest.snapshot_id,
-            label: latest.label,
-            age_min: Math.round(ageSeconds / 60),
-          });
+        if (d.snapshots?.length) {
+          setSnapshots(d.snapshots);
+          // If latest snapshot is younger than 30 minutes, offer restore toast
+          if (d.latest_age_seconds !== null && d.latest_age_seconds < 1800) {
+            const latest = d.snapshots[0];
+            setRestoreToast({
+              snapshot_id: latest.snapshot_id,
+              label: latest.label,
+              age_min: Math.max(1, Math.round(d.latest_age_seconds / 60)),
+            });
+          }
         }
       })
       .catch(() => {});
   }, []);
 
-  const handleReplay = async (snapshotId) => {
+  const handleRestoreSession = async (snapshotId) => {
     try {
       const r = await fetch(`http://localhost:8000/api/v1/snapshots/${snapshotId}`);
       const d = await r.json();
@@ -109,14 +111,16 @@ export default function App() {
   };
 
   const handleAuthorize = async () => {
-    const drawdown = simResult?.crude?.agent4_drawdown_plan || {};
+    const drawdown = simResult?.crude?.agent4_drawdown_plan || simResult?.gas?.agent4_gas_drawdown || {};
     try {
       const res = await fetch('http://localhost:8000/api/v1/generate-audit', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           authorization_token: 'AUTHORIZE_DIRECTIVE',
-          deficit_mmt: simResult?.crude?.scenario_parsed?.deficit_mmt || 0,
-          phase: 1, drawdown_plan: drawdown
+          deficit_mmt: simResult?.crude?.scenario_parsed?.deficit_mmt || simResult?.gas?.scenario_parsed?.deficit_mmscmd || 0,
+          phase: 1, 
+          drawdown_plan: drawdown,
+          sim_result: simResult
         })
       });
       setAuditResult(await res.json());
@@ -264,34 +268,13 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Audit Toast */}
+      {/* Sovereign Strategic Directive Dossier Modal */}
       <AnimatePresence>
         {auditResult && (
-          <motion.div
-            initial={{opacity:0,x:100}} animate={{opacity:1,x:0}} exit={{opacity:0,x:100}}
-            className="absolute bottom-6 right-6 bg-black/90 backdrop-blur border border-emerald-500/50 p-5 rounded-2xl shadow-2xl z-50 w-[360px]"
-          >
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div className="flex-1 overflow-hidden">
-                <h4 className="text-emerald-400 font-bold text-sm">DIRECTIVE AUTHORIZED</h4>
-                <p className="text-xs text-gray-300 mt-1">Execution ledger cryptographically sealed.</p>
-                <p className="text-[10px] text-gray-500 font-mono mt-2 truncate">SHA-256: {auditResult.cryptographic_hash}</p>
-                <button
-                  onClick={() => {
-                    const b = new Blob([auditResult.ledger_csv], {type:'text/csv'});
-                    const a = document.createElement('a');
-                    a.href = URL.createObjectURL(b); a.download = 'bharat_shield_ledger.csv'; a.click();
-                  }}
-                  className="mt-3 text-[11px] bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg px-3 py-1.5 transition-all"
-                >↓ Download Execution Ledger</button>
-              </div>
-            </div>
-          </motion.div>
+          <DirectiveDossierModal 
+            auditResult={auditResult} 
+            onClose={() => setAuditResult(null)} 
+          />
         )}
       </AnimatePresence>
     </div>

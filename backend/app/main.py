@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Optional, Dict, Any, List
 import datetime, hashlib, json, logging, os, re, asyncio
 import websockets
 import pandas as pd
@@ -162,6 +163,7 @@ class DirectiveRequest(BaseModel):
     deficit_mmt: float
     phase: int = 1
     drawdown_plan: dict
+    sim_result: Optional[dict] = None
 
 class ScenarioRequest(BaseModel):
     daily_deficit_mmt: float
@@ -559,7 +561,7 @@ async def get_route(req: RouteRequest):
 async def generate_audit(req: DirectiveRequest):
     if req.authorization_token != "AUTHORIZE_DIRECTIVE":
         raise HTTPException(status_code=403, detail="Invalid token")
-    return generate_audit_package(req.deficit_mmt, req.phase, req.drawdown_plan)
+    return generate_audit_package(req.deficit_mmt, req.phase, req.drawdown_plan, req.sim_result)
 
 @app.get("/api/v1/prices")
 async def get_prices():
