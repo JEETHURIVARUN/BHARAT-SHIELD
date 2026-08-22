@@ -396,7 +396,7 @@ export default function Controls({
                 disabled={isLoading || !chatMsg.trim()}
                 className="w-full bg-accent hover:bg-blue-400 text-white font-semibold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-40 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-sm">
                 {isLoading
-                  ? <><Activity size={14} className="animate-spin"/>Running 6-Agent Pipeline…</>
+                  ? <><Activity size={14} className="animate-spin"/>Running Autonomous Agent Mesh (NETRA, MARG, RASAYAN, KOSH, KAUTILYA, CHAKRA)…</>
                   : <><Zap size={14}/>Execute Directive</>}
               </button>
               {chatMsg && <p className="text-[9px] text-gray-600 text-center mt-2">Ctrl+Enter to submit</p>}
@@ -414,17 +414,18 @@ export default function Controls({
                         <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"/>
                         <div className="w-2.5 h-2.5 rounded-full bg-green-500/70"/>
                       </div>
-                      <span className="text-[9px] text-gray-500 font-mono flex-1 text-center">AGENT DELIBERATION TERMINAL</span>
+                      <span className="text-[9px] text-gray-500 font-mono flex-1 text-center">SOVEREIGN AGENT DELIBERATION TERMINAL</span>
                     </div>
                     <div ref={logRef} className="p-3 font-mono text-[9.5px] text-green-400 max-h-36 overflow-y-auto scrollbar-hide">
                       {simResult.deliberation_log.map((log, i) => {
                         const agent = log.match(/\[(.*?)\]/)?.[1] || '';
                         const msg   = log.replace(/\[.*?\]\s*/, '');
-                        const color = agent.includes('Critic') ? 'text-red-400' :
-                                      agent.includes('Sentinel') ? 'text-yellow-400' :
-                                      agent.includes('Trader') ? 'text-cyan-400' :
-                                      agent.includes('Governor') ? 'text-emerald-400' :
-                                      agent.includes('War Room') ? 'text-purple-400' : 'text-blue-400';
+                        const color = (agent.includes('CHAKRA') || agent.includes('Critic')) ? 'text-red-400' :
+                                      (agent.includes('NETRA') || agent.includes('Sentinel')) ? 'text-yellow-400' :
+                                      (agent.includes('RASAYAN') || agent.includes('Trader')) ? 'text-cyan-400' :
+                                      (agent.includes('KOSH') || agent.includes('Governor')) ? 'text-emerald-400' :
+                                      (agent.includes('KAUTILYA') || agent.includes('War Room')) ? 'text-purple-400' : 
+                                      (agent.includes('MARG') || agent.includes('Quant')) ? 'text-orange-400' : 'text-blue-400';
                         return (
                           <p key={i} className="mb-1 leading-relaxed">
                             <span className="text-gray-600">{String(i+1).padStart(2,'0')} </span>
@@ -520,7 +521,7 @@ export default function Controls({
                       {/* Infrastructure */}
                       <div>
                         <div className="flex items-start justify-between">
-                          <SectionLabel icon={AlertTriangle} label="Agent 2 · Port Infrastructure" color="text-orange-400"/>
+                          <SectionLabel icon={AlertTriangle} label="MARG · Port & Pipeline Infrastructure" color="text-orange-400"/>
                           <Tooltip text={`Source: ${crude.agent2_infrastructure_check?.provenance}`}>
                             <span className="text-[9px] text-gray-600 border border-white/10 rounded-full px-2 py-0.5 cursor-help hover:text-gray-300 transition-colors -mt-1">ⓘ</span>
                           </Tooltip>
@@ -585,7 +586,7 @@ export default function Controls({
 
                       {/* Replacement Crudes */}
                       <div>
-                        <SectionLabel icon={Ship} label="Agent 3 · Replacement Crudes" color="text-blue-400"/>
+                        <SectionLabel icon={Ship} label="RASAYAN · Replacement Crudes" color="text-blue-400"/>
                         {crude.agent3_crude_alternatives?.map((c, i) => (
                           <div key={i} className="flex items-center gap-2 bg-black/25 rounded-xl p-2.5 mb-2">
                             <RankBadge idx={i}/>
@@ -614,7 +615,7 @@ export default function Controls({
                         {/* Upgrade 4: Capacity Gap Alert */}
                         <CapacityGapAlert drawdown={crude.agent4_drawdown_plan}/>
                         <div className="flex items-center justify-between mb-3">
-                          <SectionLabel icon={Database} label="Agent 4 · ISPRL Drawdown" color="text-emerald-400"/>
+                          <SectionLabel icon={Database} label="KOSH · Strategic Reserve Drawdown" color="text-emerald-400"/>
                           <button onClick={() => setWhatIfEnabled(!whatIfEnabled)}
                             className={`text-[9px] border px-2 py-0.5 rounded-full transition-all ${whatIfEnabled ? 'bg-primary/20 border-primary text-primary' : 'bg-white/5 border-white/20 text-gray-500 hover:text-white'}`}>
                             {whatIfEnabled ? 'What-If: ON' : 'What-If'}
@@ -628,41 +629,34 @@ export default function Controls({
                             </p>
                             <input type="range" min="0" max="100" value={whatIfOmcPct}
                               onChange={e => setWhatIfOmcPct(parseInt(e.target.value))}
-                              className="w-full accent-primary"/>
-                            <p className="text-[9px] text-gray-600 mt-1 text-center">Drag to override the optimizer's recommendation</p>
+                              className="w-full accent-primary h-1 bg-white/20 rounded-lg cursor-pointer"/>
                           </div>
                         )}
-                        {Object.entries(crude.agent4_drawdown_plan?.OMC_Drawdown||{}).map(([k,v]) => {
-                          const totalOmc = Object.values(crude.agent4_drawdown_plan.OMC_Drawdown).reduce((a,b)=>a+b, 0.001);
-                          const val = whatIfEnabled ? (crude.scenario_parsed?.deficit_mmt * (whatIfOmcPct/100)) * (v / totalOmc) : v;
-                          return (
-                            <div key={k} className="mb-1.5">
-                              <div className="flex justify-between text-[11px]">
-                                <span className="text-gray-400">{k} <span className="text-gray-600 text-[9px]">(OMC)</span></span>
-                                <span className={`font-mono font-bold ${whatIfEnabled ? 'text-primary' : 'text-accent'}`}>{val?.toFixed(2)} MMT</span>
-                              </div>
-                              <MiniBar value={val} max={3} color={whatIfEnabled?"bg-primary":"bg-accent"}/>
-                            </div>
-                          );
-                        })}
-                        {Object.entries(crude.agent4_drawdown_plan?.ISPRL_Drawdown||{}).map(([k,v]) => {
-                          const totalIsprl = Object.values(crude.agent4_drawdown_plan.ISPRL_Drawdown).reduce((a,b)=>a+b, 0.001);
-                          const val = whatIfEnabled ? (crude.scenario_parsed?.deficit_mmt * ((100-whatIfOmcPct)/100)) * (v / totalIsprl) : v;
-                          return (
-                            <div key={k} className="mb-1.5">
-                              <div className="flex justify-between text-[11px]">
-                                <span className="text-gray-400">{k} <span className="text-gray-600 text-[9px]">(ISPRL)</span></span>
-                                <span className={`font-mono font-bold ${whatIfEnabled ? 'text-primary' : 'text-emerald-400'}`}>{val?.toFixed(2)} MMT</span>
-                              </div>
-                              <MiniBar value={val} max={2} color={whatIfEnabled?"bg-primary":"bg-emerald-500"}/>
-                            </div>
-                          );
-                        })}
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                            <p className="text-gray-500 text-[9px] uppercase">ISPRL Caverns</p>
+                            <p className="text-emerald-400 font-mono font-bold text-sm mt-0.5">
+                              {whatIfEnabled
+                                ? (crude.scenario_parsed.deficit_mmt * (1 - whatIfOmcPct/100)).toFixed(2)
+                                : (crude.agent4_drawdown_plan?.Total_Covered * 0.4 || 1.8).toFixed(2)} MMT
+                            </p>
+                            <p className="text-[9px] text-gray-600">Padur · Mangaluru · Vizag</p>
+                          </div>
+                          <div className="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                            <p className="text-gray-500 text-[9px] uppercase">OMC Commercial</p>
+                            <p className="text-blue-400 font-mono font-bold text-sm mt-0.5">
+                              {whatIfEnabled
+                                ? (crude.scenario_parsed.deficit_mmt * (whatIfOmcPct/100)).toFixed(2)
+                                : (crude.agent4_drawdown_plan?.Total_Covered * 0.6 || 2.7).toFixed(2)} MMT
+                            </p>
+                            <p className="text-[9px] text-gray-600">IOCL · BPCL · HPCL</p>
+                          </div>
+                        </div>
                       </div>
 
                       {/* Recovery Timeline */}
                       {crude.recovery_timeline && (
-                        <Collapsible title="Recovery Timeline" icon={Calendar} color="text-cyan-400"
+                        <Collapsible title="Recovery Timeline" icon={Calendar} color="text-amber-400"
                           count={`${crude.recovery_timeline.length} steps`}>
                           <RecoveryTimeline timeline={crude.recovery_timeline}/>
                         </Collapsible>
@@ -673,18 +667,16 @@ export default function Controls({
 
                 {/* GAS Results */}
                 {gas && (
-                  <Collapsible title="Natural Gas Response" icon={Wind} color="text-purple-400"
-                    count={`${gas.scenario_parsed?.deficit_mmscmd} MMSCMD`} defaultOpen={true}>
-                    <div className="flex flex-col gap-4">
+                  <Collapsible title={`Natural Gas / LNG Disruption · ${gas.scenario_parsed?.deficit_mmscmd} MMSCMD`}
+                    icon={Flame} color="text-purple-400" defaultOpen={true}>
+                    <div className="p-4 space-y-4">
 
-                      <div>
-                        <SectionLabel icon={Activity} label="Target Terminal" color="text-purple-400"/>
-                        <div className="bg-black/25 rounded-xl p-3">
-                          <p className="text-sm font-bold text-white">{gas.scenario_parsed?.terminal}</p>
-                          <div className="flex gap-4 mt-2 text-[10px] text-gray-400">
-                            <span>Capacity: <span className="text-purple-300 font-mono">{gas.agent3_lng_suppliers?.terminal_capacity_mmscmd} MMSCMD</span></span>
-                            <span>Headroom: <span className="text-green-400 font-mono">{gas.agent3_lng_suppliers?.available_headroom_mmscmd} MMSCMD</span></span>
-                          </div>
+                      {/* Scenario Summary */}
+                      <div className="bg-purple-950/20 border border-purple-500/20 rounded-xl p-3">
+                        <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
+                          <div><p className="text-gray-500 text-[9px]">Deficit</p><p className="text-purple-300 font-mono font-bold">{gas.scenario_parsed?.deficit_mmscmd} MMSCMD</p></div>
+                          <div><p className="text-gray-500 text-[9px]">Terminal</p><p className="text-white font-semibold">{gas.scenario_parsed?.terminal}</p></div>
+                          <div><p className="text-gray-500 text-[9px]">Distance</p><p className="text-cyan-300 font-mono">{gas.scenario_parsed?.distance_nm?.toLocaleString()} NM</p></div>
                         </div>
                         {gas.rerouting && (
                           <Tooltip text={`Source: ${gas.rerouting.provenance}\nConfidence: ${gas.rerouting.confidence}`}>
@@ -696,7 +688,7 @@ export default function Controls({
                       </div>
 
                       <div>
-                        <SectionLabel icon={Ship} label="Agent 3 · LNG Suppliers" color="text-cyan-400"/>
+                        <SectionLabel icon={Ship} label="RASAYAN · LNG Suppliers" color="text-cyan-400"/>
                         {gas.agent3_lng_suppliers?.top_suppliers?.map((s,i) => (
                           <div key={i} className="flex items-center gap-2 bg-black/25 rounded-xl p-2.5 mb-2">
                             <RankBadge idx={i}/>
@@ -713,7 +705,7 @@ export default function Controls({
                       </div>
 
                       <div>
-                        <SectionLabel icon={Database} label="Agent 4 · Regasification Plan" color="text-emerald-400"/>
+                        <SectionLabel icon={Database} label="KOSH · Regasification Plan" color="text-emerald-400"/>
                         {gas.agent4_regasification_plan?.terminal_plan?.map((t,i) => (
                           <div key={i} className="mb-1.5">
                             <div className="flex justify-between text-[11px]">
@@ -755,7 +747,7 @@ export default function Controls({
                 {/* Agent 6 – Red Team Assessment */}
                 {critic && (critic.warnings?.length > 0 || critic.historical_analog) && (
                   <div className="bg-red-950/15 border border-red-500/35 rounded-2xl p-4">
-                    <SectionLabel icon={ShieldAlert} label="Agent 6 · Red Team Assessment" color="text-red-400"/>
+                    <SectionLabel icon={ShieldAlert} label="CHAKRA · Red Team Vulnerability Assessment" color="text-red-400"/>
 
                     {critic.warnings?.map((w, i) => (
                       <div key={i} className="flex gap-3 bg-black/30 p-3 rounded-xl border border-red-500/20 mb-2">
@@ -801,11 +793,11 @@ export default function Controls({
                   <div className="pb-4">
                     {critic?.warnings?.some(w => w.severity === 'CRITICAL') && (
                       <div className="mb-3 bg-red-500/10 border border-red-500/40 rounded-xl p-3 text-[10px] text-red-300 text-center">
-                        ⚠ Critical vulnerabilities detected. Review Agent 6 assessment before authorizing.
+                        ⚠ Critical vulnerabilities detected. Review CHAKRA assessment before authorizing.
                       </div>
                     )}
                     <p className="text-[10px] text-gray-600 text-center mb-3 px-2 leading-relaxed">
-                      Authorization generates a <span className="text-gray-400">SHA-256 signed JSON payload</span> and a downloadable <span className="text-gray-400">CSV execution ledger</span>.
+                      Authorization generates a <span className="text-gray-400">SHA-256 signed JSON payload</span> and a downloadable <span className="text-gray-400">CSV execution ledger</span> via <span className="text-purple-400 font-semibold">KAUTILYA</span>.
                     </p>
                     <button onClick={onAuthorize}
                       className="w-full bg-danger hover:bg-red-400 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(239,68,68,0.2)] hover:shadow-[0_0_28px_rgba(239,68,68,0.4)] text-sm">

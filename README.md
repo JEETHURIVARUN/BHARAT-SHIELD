@@ -7,21 +7,22 @@ Strategic Hydrocarbon Intelligence and Emergency Logistics Directive Platform.
 ### Phase 1: Core Architecture & Data Pipelines (COMPLETED)
 - **Initialized project directory structure**: `backend/app`, `frontend/src`, etc.
 - **Environment**: Set up Python virtual environment and installed dependencies (FastAPI, Pyomo, Pandas, BeautifulSoup, Searoute, LangChain).
-- **Agent 1 (Sentinel)**: Implemented UKMTO and GDELT scrapers for maritime intelligence gathering.
-- **Agent 2 (Quant)**: Added IMF PortWatch fetcher to monitor port transit metrics dynamically.
-- **Agent 3 (Trader)**: Integrated `searoute` for maritime routing and distance calculation.
-- **Agent 4 (Governor)**: Built Pyomo MILP solver for Two-Tier Strategic Petroleum Reserve drawdown optimization.
+- **Agent 1 [NETRA - Risk Sentinel]**: Implemented UKMTO and GDELT scrapers, plus Event-Graph Memory with temporal decay for maritime intelligence.
+- **Agent 2 [MARG - Logistics & Macro Quant]**: Added IMF PortWatch fetcher, VECM price & GDP/inflation shock model, Dead-Reckoning vessel tracking, and SPM/pipeline bottleneck constraints.
+- **Agent 3 [RASAYAN - Chemical Metallurgy & LNG Trader]**: Integrated `searoute` for maritime routing, 22-grade crude assay matching with Asphaltene Instability Index (AII), and Wobbe index LNG matching.
+- **Agent 4 [KOSH - Reserve Governor]**: Built Pyomo MILP solver for Two-Tier Strategic Petroleum Reserve (ISPRL Phase I/II + OMC) drawdown optimization and gas grid balancing.
 - **Main App**: Built FastAPI skeleton endpoints.
 
 ### Phase 2: Solvers, Refinery Logic & Policy Switch Integration (COMPLETED)
-- [x] Implement Agent 3 crude assay matching algorithm in Pandas.
-- [x] Integrate SPM port discharge limits and pipeline throughput constraints in Agent 2.
+- [x] Implement Agent 3 [RASAYAN] crude assay matching algorithm in Pandas.
+- [x] Integrate SPM port discharge limits and pipeline throughput constraints in Agent 2 [MARG].
 - [x] Wire FastAPI endpoints to execute the agent chain sequentially.
 
 ### Phase 3: Frontend & Audit Package (COMPLETED + ENHANCED)
 - **Deck.gl & React UI**: Built a mesmerizing dark-mode frontend featuring interactive map layers and Framer Motion transitions.
 - **Controls & Simulation**: Integrated chat-driven simulation, search for Intel Feed and PortWatch.
-- **Agent 5 (War Room)**: Implemented cryptographic hashing (`generate_audit_package`) to produce a verified execution ledger (JSON + CSV). Users can download the CSV via the UI.
+- **Agent 5 [KAUTILYA - Strategic Audit & War Room]**: Implemented cryptographic hashing (`generate_audit_package`) to produce a verified execution ledger (JSON + CSV) and SQLite session snapshots.
+- **Agent 6 [CHAKRA - Red Team Adversarial Critic]**: Added vulnerability assessment, refinery run-rate degradation calculator, and product rationing horizon warnings.
 - **Dynamic Map Focus (Fly-To)**: After each simulation, the map camera smoothly flies to the target port using `FlyToInterpolator`.
 - **Live Maritime Route Arc**: After simulation, a `ArcLayer` draws the crude shipping route from Ras Tanura (Middle East) to the target Indian port, with distance shown in nautical miles.
 - **Animated Pulsing Chokepoints**: Bab-el-Mandeb, Suez Canal, Strait of Hormuz, and Malacca pulse in red with real-time risk percentage bars.

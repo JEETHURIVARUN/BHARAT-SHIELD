@@ -6,15 +6,14 @@
 
 ---
 
-## ⏱️ Video Structure & Timing Overview
-1. **0:00 - 1:15 (75s) | The Crucible**: The ₹15 Trillion Sovereign Vulnerability (Problem Statement)
-2. **1:15 - 2:30 (75s) | Architecture Breakdown**: The 6-Agent Deliberation & Intelligence Mesh
+## ⏱️ Video Structure & Timing Ov1. **0:00 - 1:15 (75s) | The Crucible**: The ₹15 Trillion Sovereign Vulnerability (Problem Statement)
+2. **1:15 - 2:30 (75s) | Architecture Breakdown**: The Sovereign 6-Agent Deliberation & Intelligence Mesh
 3. **2:30 - 6:30 (240s) | The Live War Game**: End-to-End Live Dynamic Simulation
-   - *Act I: Real-time Incident Ingestion & Event Graph (Agent 1)*
-   - *Act II: Macroeconomic Impact & Dead-Reckoning AIS (Agent 2)*
-   - *Act III: Chemical Metallurgy & Asphaltene Instability Matching (Agent 3)*
-   - *Act IV: Pyomo MILP Optimization & 9.5-Day Reserve Drawdown (Agent 4)*
-   - *Act V: Red-Team Adversarial Audit & Cryptographic Ledger (Agents 5 & 6)*
+   - *Act I: Real-time Threat Radar & Event Graph (NETRA - Agent 1)*
+   - *Act II: Macroeconomic Shock & Dead-Reckoning Transit (MARG - Agent 2)*
+   - *Act III: Chemical Metallurgy & Asphaltene Instability Matching (RASAYAN - Agent 3)*
+   - *Act IV: Pyomo MILP Optimization & 9.5-Day Reserve Drawdown (KOSH - Agent 4)*
+   - *Act V: Red-Team Adversarial Audit & Cryptographic Ledger (CHAKRA - Agent 6 & KAUTILYA - Agent 5)*
 4. **6:30 - 7:30 (60s) | Dual-Commodity Mastery**: LNG & Natural Gas Grid Balancing
 5. **7:30 - 8:45 (75s) | The Technical Moat**: Why Static Dashboards Fail & How We Built Real Physics
 6. **8:45 - 9:45 (60s) | Horizon & Scale**: What Happens With Next-Gen Deployment
@@ -42,14 +41,14 @@
 **Visual Cue**: Camera zooms into the UI showing the Agent deliberation pipeline and architecture diagram. Subtle transition showing the agent badges.
 
 **Speaker**:
-> *"BHARAT-SHIELD does not rely on a single generic LLM hallucinating advice. It is powered by a **Sovereign Multi-Agent Deliberation Network** where specialized agents debate, calculate, optimize, and cross-examine each other under strict physical and chemical constraints:*
+> *"BHARAT-SHIELD does not rely on a single generic LLM hallucinating advice. It is powered by a **Sovereign Multi-Agent Deliberation Network** where 6 specialized autonomous engines debate, calculate, optimize, and cross-examine each other under strict physical and chemical constraints:*
 > 
-> 1. **Sentinel (Agent 1 - Risk Radar)**: Continuous ingestion of UKMTO maritime bulletins, GDELT geopolitical news, and live AIS telemetry, structuring isolated headlines into an **Event-Graph Knowledge Memory** with exponential temporal decay.
-> 2. **Quant (Agent 2 - Macro & Maritime Physics)**: Computes macro VECM price shocks, Single Point Mooring (SPM) discharge limits, pipeline throughputs, and **Dead-Reckoning vessel trajectory extrapolation** when ships turn off their AIS transponders.
-> 3. **Trader (Agent 3 - Chemical Metallurgy & LNG Dispatch)**: Matches crude assays across 22 global grades based on API gravity, sulfur, TAN acidity, and **Asphaltene Instability Index (AII)** to ensure replacement crude doesn't coke or destroy refinery distillation columns.
-> 4. **Governor (Agent 4 - Mathematical Optimization)**: A rigorous **Pyomo Mixed-Integer Linear Programming (MILP)** solver that optimizes multi-cavern ISPRL drawdowns and commercial OMC inventories down to the rupee.
-> 5. **War Room (Agent 5 - Cryptographic Audit)**: Generates SHA-256 tamper-evident execution ledgers for ministry compliance.
-> 6. **Critic (Agent 6 - Adversarial Red-Teaming)**: Stresses the plan for run-rate cuts, refinery buffers, and product rationing horizons.*
+> 1. **NETRA (Agent 1 - Risk Sentinel & Threat Radar)**: Continuous ingestion of UKMTO maritime bulletins, GDELT geopolitical news, and live AIS telemetry, structuring isolated headlines into an **Event-Graph Knowledge Memory** with exponential temporal decay.
+> 2. **MARG (Agent 2 - Logistics & Macro Quant)**: Computes macro VECM price shocks, Single Point Mooring (SPM) discharge limits, pipeline throughputs, and **Dead-Reckoning vessel trajectory extrapolation** when ships turn off their AIS transponders.
+> 3. **RASAYAN (Agent 3 - Chemical Metallurgy & LNG Dispatch)**: Matches crude assays across 22 global grades based on API gravity, sulfur, TAN acidity, and **Asphaltene Instability Index (AII)** to ensure replacement crude doesn't coke or destroy refinery distillation columns.
+> 4. **KOSH (Agent 4 - Strategic Reserve Governor)**: A rigorous **Pyomo Mixed-Integer Linear Programming (MILP)** solver that optimizes multi-cavern ISPRL drawdowns and commercial OMC inventories down to the rupee.
+> 5. **KAUTILYA (Agent 5 - Cryptographic Audit & Mastermind)**: Generates SHA-256 tamper-evident execution ledgers and persists session state for ministry compliance.
+> 6. **CHAKRA (Agent 6 - Adversarial Red-Team Critic)**: Stresses the plan for run-rate cuts, refinery buffers, and product rationing horizons.*
 > 
 > *Let’s watch the system react to an active international crisis."*
 
@@ -63,49 +62,49 @@ Press **ENTER / EXECUTE SIMULATION**.
 #### Act I: Threat Detection & Spatial Arc (2:30 – 3:15)
 **Visual Cue**: Map executes a smooth `FlyToInterpolator` camera movement flying over the Arabian Sea to the Port of Paradip. Golden yellow maritime arc draws the shipping route from Ras Tanura to Paradip with distance (4,120 NM).
 **Speaker**:
-> *"Within 800 milliseconds of command submission, **Sentinel (Agent 1)** links the prompt against active UKMTO incident nodes. It calculates a corridor risk of 90% for the Red Sea / Bab-el-Mandeb route. 
+> *"Within 800 milliseconds of command submission, **NETRA (Agent 1)** links the prompt against active UKMTO incident nodes. It calculates a corridor risk of 90% for the Red Sea / Bab-el-Mandeb route. 
 > 
-> Simultaneously, the **Event-Graph Memory** verifies this isn't an isolated anomaly, but a critical escalation chain."*
+> Simultaneously, NETRA's **Event-Graph Memory** verifies this isn't an isolated anomaly, but a critical escalation chain."*
 
 #### Act II: Macroeconomic & Transit Shock (3:15 – 4:00)
 **Visual Cue**: Highlight the **Macroeconomic Impact Card** and **Cape of Good Hope Rerouting** card.
 **Speaker**:
-> *"Next, **Quant (Agent 2)** calculates the cascade:
+> *"Next, **MARG (Agent 2)** calculates the cascade:
 > - Rerouting a Very Large Crude Carrier (VLCC) around the Cape of Good Hope adds **14 days**, **4,500 nautical miles**, and **$1.8 Million in bunker fuel per voyage**.
-> - Using our Vector Error Correction Model (VECM), it projects an immediate **+$12.50/bbl Brent crude price shock**.
+> - Using our Vector Error Correction Model (VECM), MARG projects an immediate **+$12.50/bbl Brent crude price shock**.
 > - Look here: BHARAT-SHIELD immediately quantifies the sovereign macroeconomic fallout: **-0.25% hit to India's GDP growth** and **+0.38% increase in CPI inflation**.*
 > 
-> *It also checks Paradip's single-point mooring discharge capacity — 0.28 MMT/day — flagging that rerouted surges will congest the port without coordinated scheduling."*
+> *MARG also checks Paradip's single-point mooring discharge capacity — 0.28 MMT/day — flagging that rerouted surges will congest the port without coordinated scheduling."*
 
 #### Act III: Refinery Metallurgy & Asphaltene Science (4:00 – 4:45)
-**Visual Cue**: Zoom in on the **Agent 3 · Replacement Crudes** card. Show the ranked list (e.g., Basrah Heavy, Arab Light, Guyana Liza, WTI) and the **AII Badges** and **Route Risk %**.
+**Visual Cue**: Zoom in on the **RASAYAN · Replacement Crudes** card. Show the ranked list (e.g., Basrah Heavy, Arab Light, Guyana Liza, WTI) and the **AII Badges** and **Route Risk %**.
 **Speaker**:
 > *"Here is where pure AI meets real industrial chemistry. You cannot simply swap one crude oil for another. Paradip refinery operates high-TAN metallurgy designed for heavy sour grades.
 > 
-> Look at **Agent 3**: It evaluated global spot crudes across API, sulfur, TAN, and freight. 
+> Look at **RASAYAN (Agent 3)**: It evaluated global spot crudes across API, sulfur, TAN, and freight. 
 > Notice this badge: **AII - Asphaltene Instability Index**. If we attempt to blend high-API light crude like WTI into Paradip's tanks without precision ratio control, the asphaltene sludge precipitates, fouling the crude distillation trays and causing an emergency $5 Million refinery shutdown. 
 > 
-> BHARAT-SHIELD mathematically ranks crudes that match Paradip's metallurgy while prioritizing lower supplier route risk."*
+> RASAYAN mathematically ranks crudes that match Paradip's metallurgy while prioritizing lower supplier route risk."*
 
 #### Act IV: MILP Optimization & The 9.5-Day Reserve Metric (4:45 – 5:45)
-**Visual Cue**: Zoom into the **Agent 4 · ISPRL Drawdown Plan** card and the top ticker **Strategic Reserve Cover**. Show interactive **What-If** slider.
+**Visual Cue**: Zoom into the **KOSH · ISPRL Drawdown Plan** card and the top ticker **Strategic Reserve Cover**. Show interactive **What-If** slider.
 **Speaker**:
 > *"Now, how do we plug the immediate 4.5 MMT deficit before ships arrive?
 > 
-> **Governor (Agent 4)** executes a Pyomo MILP optimization across India's underground salt caverns — Visakhapatnam, Mangaluru, and Padur — alongside OMC commercial tanks.
+> **KOSH (Agent 4)** executes a Pyomo MILP optimization across India's underground salt caverns — Visakhapatnam, Mangaluru, and Padur — alongside OMC commercial tanks.
 > 
-> Look at the top ticker: India's base reserve is **9.5 Days**. As the solver allocates 1.8 MMT from ISPRL and 2.7 MMT from commercial stocks, the Strategic Reserve Cover dynamically decrements in real time, alerting the ministry of depleted national security days.
+> Look at the top ticker: India's base reserve is **9.5 Days**. As KOSH allocates 1.8 MMT from ISPRL and 2.7 MMT from commercial stocks, the Strategic Reserve Cover dynamically decrements in real time, alerting the ministry of depleted national security days.
 > 
 > If we toggle **What-If Mode**, we can stress test: what if Padur cavern's pump is down for maintenance? The MILP solver instantly rebalances the mathematical objective function, routing emergency volume from Visakhapatnam via coastal coastal tankers."*
 
 #### Act V: Red-Team Critic & Cryptographic Audit Ledger (5:45 – 6:30)
-**Visual Cue**: Show **Critic (Agent 6)** run-rate degradation and click **"Download Cryptographic Audit Package (.CSV / JSON)"**. Open the **War Games Archive**.
+**Visual Cue**: Show **CHAKRA (Agent 6)** run-rate degradation and click **"Download Cryptographic Audit Package (.CSV / JSON)"**. Open the **War Games Archive**.
 **Speaker**:
-> *"Before any order is issued to state refiners (IOCL, BPCL, HPCL), **Agent 6 (Red-Team Critic)** stress-tests the plan:
+> *"Before any order is issued to state refiners (IOCL, BPCL, HPCL), **CHAKRA (Agent 6 - Red-Team Critic)** stress-tests the plan:
 > - Paradip current crude buffer: 12 days.
 > - Rationing threshold: If zero crude arrives by Day 14, run-rate will be cut by 35%, placing diesel and LPG supplies across Eastern India at critical risk.
 > 
-> Finally, **Agent 5** seals the entire multi-agent deliberation into a SHA-256 hashed cryptographic audit ledger. Every assumption, cost breakdown, and solver variable is permanently captured for parliamentary and ministerial oversight.
+> Finally, **KAUTILYA (Agent 5)** seals the entire multi-agent deliberation into a SHA-256 hashed cryptographic audit ledger. Every assumption, cost breakdown, and solver variable is permanently captured for parliamentary and ministerial oversight.
 > 
 > We can even save this session into our SQLite War Games Archive to replay and benchmark past crisis responses."*
 
@@ -117,9 +116,9 @@ Press **ENTER / EXECUTE SIMULATION**.
 **Speaker**:
 > *"Energy security is not just oil — natural gas powers India's fertilizer plants, city gas grids, and power stations.
 > 
-> BHARAT-SHIELD features a native **Dual-Commodity Engine**. In a Qatar LNG cutoff, **Agent 3 (Gas Trader)** checks Wobbe Index, Gross Calorific Value (GCV), and methane percentage (>85%) across global LNG suppliers like Australia Gorgon, US Freeport, and UAE Adnoc.
+> BHARAT-SHIELD features a native **Dual-Commodity Engine**. In a Qatar LNG cutoff, **RASAYAN (Agent 3)** checks Wobbe Index, Gross Calorific Value (GCV), and methane percentage (>85%) across global LNG suppliers like Australia Gorgon, US Freeport, and UAE Adnoc.
 > 
-> **Agent 4 (Gas Governor)** re-distributes regasification capacity across Dahej, Hazira, and Kochi, and dynamically ramps domestic fallback quotas from ONGC and Reliance KG-D6 deepwater basins to prevent fertilizer plant shutoffs."*
+> **KOSH (Agent 4)** re-distributes regasification capacity across Dahej, Hazira, and Kochi, and dynamically ramps domestic fallback quotas from ONGC and Reliance KG-D6 deepwater basins to prevent fertilizer plant shutoffs."*nce KG-D6 deepwater basins to prevent fertilizer plant shutoffs."*
 
 ---
 
