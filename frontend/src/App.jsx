@@ -14,6 +14,8 @@ const TICKER_ITEMS = [
   { label: 'Henry Hub', key: 'HenryHub_USD_MMBtu', unit: '$/MMBtu', up: false },
 ];
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function App() {
   const [isLoading, setIsLoading]           = useState(false);
   const [simResult, setSimResult]           = useState(null);
@@ -32,7 +34,7 @@ export default function App() {
 
   // Check for recent active session on initial mount
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/snapshots')
+    fetch(`${API_BASE}/api/v1/snapshots`)
       .then(r => r.json())
       .then(d => {
         if (d.snapshots?.length) {
@@ -53,7 +55,7 @@ export default function App() {
 
   const handleReplay = async (snapshotId) => {
     try {
-      const r = await fetch(`http://localhost:8000/api/v1/snapshots/${snapshotId}`);
+      const r = await fetch(`${API_BASE}/api/v1/snapshots/${snapshotId}`);
       const d = await r.json();
       if (d.snapshot) {
         setSimResult(d.snapshot);
@@ -66,7 +68,7 @@ export default function App() {
   // Fetch vessels on mount and auto-refresh with stateful MMSI merge
   useEffect(() => {
     const fetchVessels = () => {
-      fetch('http://localhost:8000/api/v1/vessels')
+      fetch(`${API_BASE}/api/v1/vessels`)
         .then(r => r.json())
         .then(d => {
           if (d.vessels && d.vessels.length > 0) {
@@ -86,7 +88,7 @@ export default function App() {
 
   // Fetch prices on mount
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/prices')
+    fetch(`${API_BASE}/api/v1/prices`)
       .then(r => r.json())
       .then(d => { if (d.prices) setPrices(d.prices); })
       .catch(() => {});
@@ -95,14 +97,14 @@ export default function App() {
   const handleChatSubmit = async (message) => {
     setIsLoading(true); setAuditResult(null);
     try {
-      const res  = await fetch('http://localhost:8000/api/v1/chat-simulate', {
+      const res  = await fetch(`${API_BASE}/api/v1/chat-simulate`, {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ message })
       });
       const data = await res.json();
       setSimResult(data);
       // Refresh snapshots list after new simulation
-      fetch('http://localhost:8000/api/v1/snapshots')
+      fetch(`${API_BASE}/api/v1/snapshots`)
         .then(r => r.json())
         .then(d => { if (d.snapshots?.length) setSnapshots(d.snapshots); })
         .catch(() => {});
@@ -113,7 +115,7 @@ export default function App() {
   const handleAuthorize = async () => {
     const drawdown = simResult?.crude?.agent4_drawdown_plan || simResult?.gas?.agent4_gas_drawdown || {};
     try {
-      const res = await fetch('http://localhost:8000/api/v1/generate-audit', {
+      const res = await fetch(`${API_BASE}/api/v1/generate-audit`, {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           authorization_token: 'AUTHORIZE_DIRECTIVE',
@@ -130,7 +132,7 @@ export default function App() {
   const fetchIntel = async (query) => {
     setIsIntelLoading(true);
     try {
-      const r = await fetch('http://localhost:8000/api/v1/cloud-llm-intel', {
+      const r = await fetch(`${API_BASE}/api/v1/cloud-llm-intel`, {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ query: query || 'maritime disruption', incident_types: null })
       });
@@ -152,7 +154,7 @@ export default function App() {
       const end_date = today.toISOString().split('T')[0];
       const start_date = thirtyDaysAgo.toISOString().split('T')[0];
 
-      const r = await fetch('http://localhost:8000/api/v1/portwatch', {
+      const r = await fetch(`${API_BASE}/api/v1/portwatch`, {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ port_id: portId || 'Paradip', start_date, end_date, metric })
       });

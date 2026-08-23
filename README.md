@@ -1,42 +1,156 @@
-# BHARAT-SHIELD
+# 🛡️ BHARAT-SHIELD
+### AI-Driven Energy Supply Chain Resilience & Sovereign Directive Platform
+**Theme**: Supply Chain Intelligence, Energy Security and Geopolitical Risk  
+**Corpus / Repository**: [JEETHURIVARUN/BHARAT-SHIELD](https://github.com/JEETHURIVARUN/BHARAT-SHIELD)
 
-Strategic Hydrocarbon Intelligence and Emergency Logistics Directive Platform.
+---
 
-## Track Flow & Development History
+## 📌 Executive Summary & Problem Context
+India imports approximately **88% of its crude oil**, with **40–45% transiting the volatile Strait of Hormuz**. Recent geopolitical disruptions—attacks on Red Sea maritime corridors, sanctions on Iranian exports, and regional standoffs—repeatedly destabilize supply and pricing. Meanwhile, India’s underground **Strategic Petroleum Reserves (ISPRL) cover only ~9.5 days of national consumption**.
 
-### Phase 1: Core Architecture & Data Pipelines (COMPLETED)
-- **Initialized project directory structure**: `backend/app`, `frontend/src`, etc.
-- **Environment**: Set up Python virtual environment and installed dependencies (FastAPI, Pyomo, Pandas, BeautifulSoup, Searoute, LangChain).
-- **Agent 1 [NETRA - Risk Sentinel]**: Implemented UKMTO and GDELT scrapers, plus Event-Graph Memory with temporal decay for maritime intelligence.
-- **Agent 2 [MARG - Logistics & Macro Quant]**: Added IMF PortWatch fetcher, VECM price & GDP/inflation shock model, Dead-Reckoning vessel tracking, and SPM/pipeline bottleneck constraints.
-- **Agent 3 [RASAYAN - Chemical Metallurgy & LNG Trader]**: Integrated `searoute` for maritime routing, 22-grade crude assay matching with Asphaltene Instability Index (AII), and Wobbe index LNG matching.
-- **Agent 4 [KOSH - Reserve Governor]**: Built Pyomo MILP solver for Two-Tier Strategic Petroleum Reserve (ISPRL Phase I/II + OMC) drawdown optimization and gas grid balancing.
-- **Main App**: Built FastAPI skeleton endpoints.
+Existing enterprise supply chain planning tools cannot model geopolitical risk in real time or coordinate multi-refinery, multi-cavern rerouting under physical and chemical constraints.
 
-### Phase 2: Solvers, Refinery Logic & Policy Switch Integration (COMPLETED)
-- [x] Implement Agent 3 [RASAYAN] crude assay matching algorithm in Pandas.
-- [x] Integrate SPM port discharge limits and pipeline throughput constraints in Agent 2 [MARG].
-- [x] Wire FastAPI endpoints to execute the agent chain sequentially.
+**BHARAT-SHIELD** is an AI-powered autonomous directive system that:
+1. **Monitors live maritime & geopolitical risks** via AISStream WebSockets and global incident feeds.
+2. **Quantifies macroeconomic shocks** using Vector Error Correction Models (VECM) for Brent crude and JKM LNG.
+3. **Ensures refinery metallurgical safety** through the non-linear **Asphaltene Instability Index (AII)** across 22 global crude grades.
+4. **Optimizes underground salt cavern drawdowns** (Visakhapatnam, Mangaluru, Padur) and commercial stocks via **Pyomo MILP Optimization**.
+5. **Red-teams directives for vulnerabilities** and synthesizes tamper-proof, **AI-narrated 5-Act Sovereign Dossiers** with cryptographic SHA-256 validation.
 
-### Phase 3: Frontend & Audit Package (COMPLETED + ENHANCED)
-- **Deck.gl & React UI**: Built a mesmerizing dark-mode frontend featuring interactive map layers and Framer Motion transitions.
-- **Controls & Simulation**: Integrated chat-driven simulation, search for Intel Feed and PortWatch.
-- **Agent 5 [KAUTILYA - Strategic Audit & War Room]**: Implemented cryptographic hashing (`generate_audit_package`) to produce a verified execution ledger (JSON + CSV) and SQLite session snapshots.
-- **Agent 6 [CHAKRA - Red Team Adversarial Critic]**: Added vulnerability assessment, refinery run-rate degradation calculator, and product rationing horizon warnings.
-- **Dynamic Map Focus (Fly-To)**: After each simulation, the map camera smoothly flies to the target port using `FlyToInterpolator`.
-- **Live Maritime Route Arc**: After simulation, a `ArcLayer` draws the crude shipping route from Ras Tanura (Middle East) to the target Indian port, with distance shown in nautical miles.
-- **Animated Pulsing Chokepoints**: Bab-el-Mandeb, Suez Canal, Strait of Hormuz, and Malacca pulse in red with real-time risk percentage bars.
-- **KPI Status Bar**: 5 live KPI chips at the top of the map (Deficit, Refinery, Best Crude, Port, Route Distance) update on every simulation.
-- **Hover Tooltips on Map**: Hovering over any port or chokepoint shows a floating tooltip card.
-- **`.env` API Key Config**: Backend now loads from `C:\BHARAT\backend\.env`. Set `OPENAI_API_KEY` there to enable LLM-powered scenario parsing.
-### Phase 4: Natural Gas Extension + Deep Strengthening (COMPLETED)
-- **`agent3_gas_trader.py`**: Full LNG terminal DB (6 Indian terminals), 8-supplier LNG catalogue, Wobbe Index/methane matching, regasification headroom distribution.
-- **`agent4_gas_governor.py`**: Pyomo MILP solver for gas supply across LNG terminals + domestic field fallback (ONGC, Reliance).
-- **`shared_models.py`**: Risk(t) decay model `α·Severity·e^(−λ·Δt)`, VECM price shock stub, Cape of Good Hope rerouting by vessel type.
-- **`assays.json`**: Expanded crude assay DB — 20 real global grades with API, Sulfur, TAN, yield curves, Brent differentials.
-- **`isprl_data.json`**: ISPRL cavern fill levels, daily drawdown limits, OMC stock data loaded dynamically.
-- **`main.py` v2**: Single `/api/v1/chat-simulate` handles crude + gas simultaneously. OpenAI → Gemini LLM fallback. AISStream vessel endpoint with mock fallback. `/api/v1/prices` and `/api/v1/lng-terminals` endpoints.
-- **`.env`**: All API keys documented — OpenAI, Gemini, AISStream, Alpha Vantage.
-- **`Dashboard.jsx`**: LNG terminal purple nodes, gas/crude pipeline PathLayers, dual color-coded ArcLayers (yellow=crude, purple=gas), animated vessel dots (cyan=LNG, yellow=tanker).
-- **`Controls.jsx`**: Same chat tab shows both crude (yellow card) and gas (purple card) results side by side. Price shock card, rerouting impact, LNG regasification plan, LNG supplier viability ranking.
-- **`App.jsx`**: Live price ticker bar (Brent/Dubai/WTI/JKM/TTF/Henry Hub), dual KPI bar for crude+gas, vessel fetch on mount.
+---
+
+## 🏛️ The Sovereign 6-Engine Multi-Agent Mesh
+
+```mermaid
+graph TD
+    A["Live AIS Telemetry & Maritime Feeds"] --> NETRA["👁️ NETRA (Risk Sentinel)"]
+    NETRA -->|"Event-Graph Decay & Threat Radar"| MARG["📐 MARG (Logistics & Macro Quant)"]
+    MARG -->|"VECM Price Shock & Dead-Reckoning"| RASAYAN["🧪 RASAYAN (Chemical Metallurgy)"]
+    RASAYAN -->|"AII Blending & LNG Wobbe Matching"| KOSH["🏛️ KOSH (Strategic Reserve Governor)"]
+    KOSH -->|"Pyomo MILP 9.5-Day Drawdown Solver"| CHAKRA["⚔️ CHAKRA (Adversarial Critic)"]
+    CHAKRA -->|"Run-Rate Stress & Bottleneck Defense"| KAUTILYA["📜 KAUTILYA (Cryptographic Storyteller)"]
+    KAUTILYA -->|"5-Act Story Dossier + Voice Briefing"| EXEC["🚨 Executive Sovereign Directive"]
+```
+
+| Engine | Designation | Core Capability |
+| :--- | :--- | :--- |
+| **NETRA** | Risk Sentinel | Ingests real-time UKMTO incidents, GDELT news, and AIS feeds with exponential temporal decay graph memory. |
+| **MARG** | Logistics & Macro Quant | Computes Cape of Good Hope transit delays (+14 days), Dead-Reckoning vessel trajectories, SPM berth limits, and VECM inflation impacts. |
+| **RASAYAN** | Chemical Metallurgy | Evaluates 22-grade global crude assays across API, sulfur, TAN, and **Asphaltene Instability Index (AII)** to prevent refinery distillation coking. |
+| **KOSH** | Reserve Governor | Executes **Pyomo Mixed-Integer Linear Programming (MILP)** across ISPRL caverns and OMC stocks to preserve national 9.5-day cover. |
+| **CHAKRA** | Adversarial Critic | Red-teams the operational plan for refinery run-rate degradation, single-point-of-failure bottlenecks, and product rationing horizons. |
+| **KAUTILYA** | Cryptographic Storyteller | Generates tamper-proof SHA-256 execution ledgers, session snapshots, and **interactive 5-Act AI Voice-Narrated Briefings**. |
+
+---
+
+## 🚀 Quick Start & Local Execution Guide
+
+### 📋 Prerequisites
+- **Python 3.10+** (Python 3.11/3.12 recommended)
+- **Node.js 18+ & npm**
+- **Git**
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/JEETHURIVARUN/BHARAT-SHIELD.git
+cd BHARAT-SHIELD
+```
+
+---
+
+### 2️⃣ Backend Setup (FastAPI + Mathematical Solvers)
+Open a terminal in the project root:
+```powershell
+cd backend
+
+# Create & activate virtual environment
+# Windows:
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+
+# macOS / Linux:
+# python3 -m venv venv
+# source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# (Optional) Copy environment template
+cp .env.example .env
+
+# Launch FastAPI Server
+uvicorn app.main:app --reload --port 8000
+```
+*Backend runs at:* `http://localhost:8000`  
+*Interactive Swagger API Docs:* `http://localhost:8000/docs`
+
+---
+
+### 3️⃣ Frontend Setup (React + Vite + Deck.gl)
+Open a **new terminal window** in the project root:
+```powershell
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start Vite Development Server
+npm run dev
+```
+*Open your browser at:* **`http://localhost:5173`**
+
+---
+
+## 🌐 Cloud Deployment Guide (Vercel + Render)
+
+### Deploy Frontend to Vercel (Recommended)
+1. Push your code to GitHub.
+2. Go to [Vercel](https://vercel.com) and click **Add New Project**.
+3. Import the `JEETHURIVARUN/BHARAT-SHIELD` repository.
+4. Set **Root Directory** to `frontend`.
+5. Under **Environment Variables**, add:
+   * `VITE_API_URL` = `https://your-backend-service.onrender.com` (or your hosted FastAPI URL).
+6. Click **Deploy**. Vercel will build and host the interactive 3D digital twin.
+
+### Deploy Backend to Render (Free Tier)
+1. Go to [Render](https://render.com) and create a **New Web Service**.
+2. Connect your GitHub repository.
+3. Set **Root Directory** to `backend`.
+4. Set **Runtime** to `Python 3`.
+5. Set **Build Command** to `pip install -r requirements.txt`.
+6. Set **Start Command** to `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+7. Click **Create Web Service**.
+
+---
+
+## 💡 Live Interactive War Game Scenarios to Try
+
+1. **Red Sea Maritime Escalation (Crude Shortfall)**:
+   > *"Houthi drone strike on VLCC near Bab-el-Mandeb. 4.5 MMT crude supply disrupted for Paradip refinery. Recommend full rerouting and emergency drawdown."*
+2. **Strait of Hormuz Dual-Commodity Blockade**:
+   > *"Hormuz military standoff: 8 MMT crude disrupted at Jamnagar + 12 MMSCMD LNG shortfall at Dahej terminal."*
+3. **Ministerial AI Voice Briefing**:
+   - After simulation, click **"Authorize Directive"**.
+   - Click **"🎙️ AI Voice Narration"** to hear the sovereign executive briefing read aloud.
+   - Inspect the **5-Act Story Scenario**, **Action Orders**, and export the **Cryptographic Markdown Dossier**.
+
+---
+
+## 📊 Technical Moats & Scientific Formulations
+
+1. **Non-Linear Asphaltene Instability Index (AII)**:
+   $$\text{AII} = \frac{\text{Asphaltenes} + \text{Resins}}{\text{Saturates} + \text{Aromatics}}$$
+   Prevents catastrophic flocculation and refinery crude distillation unit (CDU) tray coking when blending spot crudes.
+
+2. **Pyomo MILP Multi-Cavern Optimization**:
+   $$\min \sum_{i} \left( C_i^{\text{draw}} \cdot x_i + C_i^{\text{freight}} \cdot x_i + \lambda \cdot (D - \sum x_i)^2 \right)$$
+   Subject to daily cavern withdrawal ceilings, OMC commercial minimum working inventories, and SPM pipeline evacuation limits.
+
+3. **Vector Error Correction Macro Shock (VECM)**:
+   Quantifies cointegrated long-run Brent/JKM pricing dynamics and maps direct basis-point impact to India's CPI inflation and GDP growth.
+
+---
+
+## 🛡️ License & Sovereign Mandate
+Developed for the National Energy Security & Supply Chain Resilience Hackathon.  
+© 2026 BHARAT-SHIELD Team · Strategic Autonomy for Bharat.
