@@ -888,6 +888,14 @@ export default function Controls({
                     ))}
                   </div>
                 )}
+                {/* No results found */}
+                {intelData && !intelData.UKMTO?.length && !intelData.GDELT?.length && (
+                  <div className="flex flex-col items-center py-10 gap-3">
+                    <Radar size={32} className="text-gray-700"/>
+                    <p className="text-xs text-gray-500 text-center">No intelligence found for that query.<br/>Try: <span className="text-accent">Red Sea</span> or <span className="text-accent">Hormuz</span></p>
+                    <button onClick={() => setIntelData(null)} className="text-[10px] text-gray-500 hover:text-white border border-white/10 px-3 py-1.5 rounded-full mt-1 transition-all">← Back to search</button>
+                  </div>
+                )}
                 {!intelData && (
                   <div className="flex flex-col items-center py-12 gap-3">
                     <Radar size={32} className="text-gray-700"/>

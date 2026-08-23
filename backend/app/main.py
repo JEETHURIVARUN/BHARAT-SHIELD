@@ -172,7 +172,7 @@ class ScenarioRequest(BaseModel):
 
 class IntelRequest(BaseModel):
     query: str
-    incident_types: list = None
+    incident_types: Optional[List[str]] = None
 
 class PortWatchRequest(BaseModel):
     port_id: str

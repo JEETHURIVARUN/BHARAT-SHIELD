@@ -134,15 +134,19 @@ export default function App() {
     try {
       const r = await fetch(`${API_BASE}/api/v1/cloud-llm-intel`, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ query: query || 'maritime disruption', incident_types: null })
+        body: JSON.stringify({ query: query || 'India crude oil Red Sea maritime attack' })
       });
+      if (!r.ok) {
+        console.error('Intel API error:', r.status, await r.text());
+        setIsIntelLoading(false);
+        return;
+      }
       const d = await r.json();
-      // Upgrade 1: pass both raw_intelligence AND incident_chains together
       setIntelData({
         ...d.raw_intelligence,
         incident_chains: d.incident_chains || [],
       });
-    } catch(e) { console.error(e); }
+    } catch(e) { console.error('Intel fetch failed:', e); }
     setIsIntelLoading(false);
   };
 
